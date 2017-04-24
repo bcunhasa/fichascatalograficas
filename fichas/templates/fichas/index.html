@@ -1,0 +1,49 @@
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gerador de fichas catalográficas</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/fichas.css' %}">
+  </head>
+
+  <body>
+    <div class="container-fluid">
+
+    <header class="row"> <!-- Exibe o título e o nome da instituição -->
+      <h1>Faculdade Serra do Carmo</h1>
+      <h3>Gerador de fichas catalográficas</h3>
+    </header>
+
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div role="main" class="col-md-6" id="formdiv"> <!-- Exibe o formulário -->
+        <form action="{% url 'fichas:index' %}" method="post" target="_blank"
+        class="form">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+
+          {% buttons %}
+            <button name="submit" class="btn btn-primary">Gerar</button>
+          {% endbuttons %}
+        </form>
+        <div class="col-md-3"></div>
+      </div> <!-- Fecha div do formulário -->
+    </div>
+
+    <footer class="row"> <!-- Exibe uma mensagem no rodapé -->
+      <p class="text-muted">Desenvolvido pelo setor de TI da Faculdade Serra
+      do Carmo</p>
+    </footer>
+
+    </div><!-- Fecha div geral (container) -->
+  </body>
+</html>
