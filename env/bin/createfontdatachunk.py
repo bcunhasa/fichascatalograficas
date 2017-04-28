@@ -1,4 +1,4 @@
-#!/home/bruno/Dropbox/Desenvolvimento/Estágio - Serra do Carmo/Ficha Catalográfica/env/bin/python
+#!/home/bruno/fichascatalograficas/env/bin/python
 from __future__ import print_function
 import base64
 import os

@@ -25,7 +25,7 @@ SECRET_KEY = 'c5fwttn9554s_$h^m1%&kxr1i23bt270!j(a!_b9es@7^jq5-c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.52']
 
 
 # Application definition
@@ -125,7 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Configuações para django-bootstrap3
+# Configuacoes para django-bootstrap3
 BOOTSTRAP3 = {
     'include_jquery': True,
     }
+
+# Outras configuracoes
+STATIC_ROOT="~/fichascatalograficas/fichas/static"

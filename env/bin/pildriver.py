@@ -1,4 +1,4 @@
-#!/home/bruno/Dropbox/Desenvolvimento/Estágio - Serra do Carmo/Ficha Catalográfica/env/bin/python
+#!/home/bruno/fichascatalograficas/env/bin/python
 """PILdriver, an image-processing calculator using PIL.
 
 An instance of class PILDriver is essentially a software stack machine

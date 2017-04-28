@@ -1,4 +1,4 @@
-#!/home/bruno/Dropbox/Desenvolvimento/Estágio - Serra do Carmo/Ficha Catalográfica/env/bin/python
+#!/home/bruno/fichascatalograficas/env/bin/python
 from django.core import management
 
 if __name__ == "__main__":

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
+from django.conf.urls.static import static
+from django.conf import settings
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
@@ -56,11 +58,22 @@ def ficha(request):
 
 def defineFonte(request, draw_canvas):
     """Define a fonte da ficha"""
-    pdfmetrics.registerFont(TTFont('Monospace', 'Monospace.ttf'))
-    pdfmetrics.registerFont(TTFont('Arial', 'Arial.ttf'))
-    pdfmetrics.registerFont(TTFont('Times', 'times.ttf'))
-    draw_canvas.setFont(request.session['fonte'],
-        request.session['tamanho_fonte'])
+    monospace_font = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
+    arial_font = "/usr/share/fonts/truetype/msttcorefonts/arial.ttf"
+    times_font = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"
+
+    pdfmetrics.registerFont(TTFont('Monospace', monospace_font))
+    pdfmetrics.registerFont(TTFont('Arial', arial_font))
+    pdfmetrics.registerFont(TTFont('Times', times_font))
+
+    draw_canvas.setFont(request.session['fonte'], request.session['tamanho_fonte'])
+
+    #if request.session['fonte'] == 'Times':
+    #    draw_canvas.setFont('Times-Roman', request.session['tamanho_fonte'])
+    #elif request.session['fonte'] == 'Arial':
+    #    draw_canvas.setFont('arial', request.session['tamanho_fonte'])
+    #else:
+    #    draw_canvas.setFont('Monospace', request.session['tamanho_fonte'])
     return draw_canvas
 
 def desenhaRetangulo(request, draw_canvas):
