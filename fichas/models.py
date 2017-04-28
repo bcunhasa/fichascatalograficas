@@ -9,6 +9,7 @@ class Ficha(models.Model):
     FONTE = (
         ('Arial', 'Arial'),
         ('Times', 'Times New Roman'),
+        ('Monospace', 'Monoespaçada'),
     )
 
     TIPO_TRABALHO = (
