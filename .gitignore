@@ -1,3 +1,4 @@
-ll_env/
+env/
 __pycache__/
 *.sqlite3
+ficha_catalografica/settings.py
