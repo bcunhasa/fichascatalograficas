@@ -17,6 +17,11 @@ class Ficha(models.Model):
         ('Dissertação', 'Dissertação'),
         ('Tese', 'Tese'),
     )
+    
+    TEM_FIGURAS = (
+   	('Sim', 'Sim'),
+   	('Nao', 'Não'),
+    )
 
     # Modelos usados no projeto
     nome = models.CharField(max_length=50, default='')
@@ -26,6 +31,12 @@ class Ficha(models.Model):
     sub_titulo = models.CharField(max_length=200, default='')
     curso = models.CharField(max_length=200, default='')
     ano = models.PositiveIntegerField(default=2017)
+    folhas = models.PositiveIntegerField(default=1)
+    figuras = models.CharField(
+    	max_length=20,
+    	choices=TEM_FIGURAS,
+    	default='Sim'
+    )
     orientador = models.CharField(max_length=200, default='')
     coorientador = models.CharField(max_length=200, default='', blank=True,
         null=True)
@@ -34,6 +45,11 @@ class Ficha(models.Model):
         choices=TIPO_TRABALHO,
         default='Monografia'
     )
+    assunto1 = models.CharField(max_length=20, default='')
+    assunto2 = models.CharField(max_length=20, default='')
+    assunto3 = models.CharField(max_length=20, default='')
+    assunto4 = models.CharField(max_length=20, default='')
+    assunto5 = models.CharField(max_length=20, default='')
     fonte = models.CharField(
         max_length=15,
         choices=FONTE,
