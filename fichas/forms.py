@@ -51,3 +51,4 @@ class FichaForm(forms.ModelForm):
             'titulo_obtido': 'Título obtido:',
             'fonte': 'Fonte:',
             'tamanho_fonte': 'Tamanho da fonte:'}
+            

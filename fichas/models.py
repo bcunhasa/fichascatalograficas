@@ -9,7 +9,11 @@ class Ficha(models.Model):
     FONTE = (
         ('Arial', 'Arial'),
         ('Times', 'Times New Roman'),
+<<<<<<< HEAD
         #('Monospace', 'Monoespaçada'),
+=======
+        ('Monospace', 'Monoespaçada'),
+>>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
     )
 
     TIPO_TRABALHO = (
@@ -19,6 +23,7 @@ class Ficha(models.Model):
     )
     
     TEM_FIGURAS = (
+<<<<<<< HEAD
    	    ('Sim', 'Sim'),
    	    ('Nao', 'Não'),
     )
@@ -27,6 +32,10 @@ class Ficha(models.Model):
         ('Bacharelado', 'Bacharelado'),
         ('Mestrado', 'Mestrado'),
         ('Doutorado', 'Doutorado'),
+=======
+   	('Sim', 'Sim'),
+   	('Nao', 'Não'),
+>>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
     )
 
     # Modelos usados no projeto
@@ -34,10 +43,15 @@ class Ficha(models.Model):
     sobrenome = models.CharField(max_length=200, default='')
     cutter = models.CharField(max_length=10, default='')
     titulo = models.CharField(max_length=200, default='')
+<<<<<<< HEAD
     sub_titulo = models.CharField(max_length=200, default='', blank=True, null=True)
     curso = models.CharField(max_length=200, default='')
     instituicao = models.CharField(max_length=200, default='Faculdade Serra do Carmo')
     cidade = models.CharField(max_length=100, default='Palmas')
+=======
+    sub_titulo = models.CharField(max_length=200, default='')
+    curso = models.CharField(max_length=200, default='')
+>>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
     ano = models.PositiveIntegerField(default=2017)
     folhas = models.PositiveIntegerField(default=1)
     figuras = models.CharField(
@@ -53,6 +67,7 @@ class Ficha(models.Model):
         choices=TIPO_TRABALHO,
         default='Monografia'
     )
+<<<<<<< HEAD
     titulo_obtido = models.CharField(
         max_length=15,
         choices=TITULO_OBTIDO,
@@ -70,6 +85,20 @@ class Ficha(models.Model):
     )
     tamanho_fonte = models.PositiveIntegerField(validators=[
         MaxValueValidator(42), MinValueValidator(4)], default=11)
+=======
+    assunto1 = models.CharField(max_length=20, default='')
+    assunto2 = models.CharField(max_length=20, default='')
+    assunto3 = models.CharField(max_length=20, default='')
+    assunto4 = models.CharField(max_length=20, default='')
+    assunto5 = models.CharField(max_length=20, default='')
+    fonte = models.CharField(
+        max_length=15,
+        choices=FONTE,
+        default='Arial',
+    )
+    tamanho_fonte = models.PositiveIntegerField(validators=[
+        MaxValueValidator(42), MinValueValidator(4)], default=12)
+>>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
 
     def __str__(self):
         """Devolve um das varíaveis como representação do modelo"""
