@@ -1,3 +1,19 @@
+/* CSS da página única da aplicação */
+
+.navbar-default {
+    background-color: #125775;
+    border-color: #E7E7E7;
+}
+
+.navbar-default .navbar-brand {
+    color: #cccccc;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #ffffff;
+}
+
 header {
     color: black;
     font-family: "Verdana", Arial, sans-serif;

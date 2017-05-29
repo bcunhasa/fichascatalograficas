@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,10 +13,11 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <link rel="stylesheet" href="{% static 'css/fichas.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo-fasec.png' %}">
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <button type="button" class="navbar-toggle collapsed"
           data-toggle="collapse" data-target="#navbar"
@@ -46,167 +47,10 @@
         class="form">
           {% csrf_token %}
           
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="id_nome">Nome*:</label>
-            <div class="col-md-9">
-            <input type="text" name="nome" placeholder="Nome completo (menos o último nome)" title="" required="" id="id_nome" maxlength="50" class="form-control">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="id_sobrenome">Último nome:</label>
-            <div class="col-md-9">
-              <input type="text" name="sobrenome" placeholder="Último nome" title="" required="" id="id_sobrenome" maxlength="200" class="form-control">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="id_cutter">Cutter*:</label>
-            <div class="col-md-9">
-              <input type="text" name="cutter" placeholder="Código cutter" title="" required="" id="id_cutter" maxlength="10" class="form-control">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="id_titulo">Título*:</label>
-            <div class="col-md-9">
-              <input type="text" name="titulo" placeholder="Título do trabalho" title="" required="" id="id_titulo" maxlength="200" class="form-control">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="col-md-3 control-label" for="id_sub_titulo">Sub-título:</label>
-            <div class="col-md-9">
-              <input type="text" name="sub_titulo" placeholder="Sub-título do trabalho" title="" id="id_sub_titulo" maxlength="200" class="form-control"></div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_curso">Curso*:</label>
-              <div class="col-md-9">
-                <input type="text" name="curso" placeholder="Curso" title="" required="" id="id_curso" maxlength="200" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_instituicao">Instituição de ensino*:</label>
-              <div class="col-md-9">
-                <input type="text" name="instituicao" value="Faculdade Serra do Carmo" placeholder="Instituição de ensino" title="" required="" id="id_instituicao" maxlength="200" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_cidade">Cidade*:</label>
-              <div class="col-md-9">
-                <input type="text" name="cidade" value="Palmas" placeholder="Cidade" title="" required="" id="id_cidade" maxlength="100" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_ano">Ano*:</label>
-              <div class="col-md-9"><input type="number" name="ano" value="2017" placeholder="Ano" title="" min="0" required="" id="id_ano" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_folhas">Número de folhas*:</label>
-              <div class="col-md-9">
-                <input type="number" name="folhas" value="1" placeholder="Número de folhas" title="" min="0" required="" id="id_folhas" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_orientador">Orientador*:</label>
-              <div class="col-md-9">
-                <input type="text" name="orientador" placeholder="Nome completo do orientador" title="" required="" id="id_orientador" maxlength="200" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_assunto1">Assunto 1:</label>
-              <div class="col-md-9">
-                <input type="text" name="assunto1" placeholder="Assunto 1" title="" id="id_assunto1" maxlength="25" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_assunto2">Assunto 2:</label>
-              <div class="col-md-9">
-                <input type="text" name="assunto2" placeholder="Assunto 2" title="" id="id_assunto2" maxlength="25" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_assunto3">Assunto 3:</label>
-              <div class="col-md-9">
-                <input type="text" name="assunto3" placeholder="Assunto 3" title="" id="id_assunto3" maxlength="25" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_assunto4">Assunto 4:</label>
-              <div class="col-md-9">
-                <input type="text" name="assunto4" placeholder="Assunto 4" title="" id="id_assunto4" maxlength="25" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_assunto5">Assunto 5:</label>
-              <div class="col-md-9">
-                <input type="text" name="assunto5" placeholder="Assunto 5" title="" id="id_assunto5" maxlength="25" class="form-control">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_tipo_trabalho">Tipo do trabalho:</label>
-              <div class="col-md-9">
-                <select name="tipo_trabalho" id="id_tipo_trabalho" title="" class="form-control">
-                  <option value="Monografia" selected="">Monografia</option>
-
-                  <option value="Dissertação">Dissertação</option>
-
-                  <option value="Tese">Tese</option>
-
-                </select>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_titulo_obtido">Título obtido:</label>
-              <div class="col-md-9">
-                <select name="titulo_obtido" id="id_titulo_obtido" title="" class="form-control">
-                  <option value="Bacharelado" selected="">Bacharelado</option>
-
-                  <option value="Mestrado">Mestrado</option>
-
-                  <option value="Doutorado">Doutorado</option>
-
-                </select>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_fonte">Fonte:</label>
-              <div class="col-md-9">
-                <select name="fonte" id="id_fonte" title="" class="form-control">
-                  <option value="Arial">Arial</option>
-
-                  <option value="Times" selected="">Times New Roman</option>
-
-                </select>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="id_tamanho_fonte">Tamanho da fonte:</label>
-              <div class="col-md-9">
-                <input type="number" name="tamanho_fonte" value="11" placeholder="Tamanho da fonte:" title="" min="0" required="" id="id_tamanho_fonte" class="form-control">
-              </div>
-            </div>
-
-          <!-- {% bootstrap_form form layout='horizontal' %} -->
+          {% bootstrap_form form layout='horizontal' %}
 
           {% buttons %}
-            <button name="submit" class="btn btn-primary">Gerar</button>
+            <button name="submit" class="btn btn-primary">Gerar ficha</button>
           {% endbuttons %}
         </form>
       </div> <!-- Fecha div do formulário -->

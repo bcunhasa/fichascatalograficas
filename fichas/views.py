@@ -12,16 +12,27 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from reportlab.lib.styles import ParagraphStyle
 
+from reportlab.pdfbase.pdfmetrics import stringWidth
+from reportlab.rl_config import defaultPageSize
+
+from unicodedata import normalize
+import csv
+
 from .models import Ficha
 from .forms import FichaForm
 
-<<<<<<< HEAD
-linhas = []
-topo_res = 9.5
-passada_vert = 0.5
+largura_pagina = defaultPageSize[0]
+altura_pagina = defaultPageSize[1]
 
-=======
->>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
+linhas = []
+topo_res = 12
+passada_vert = 0.45
+
+esquerda = 6
+recuo = 0
+
+assuntos = []
+
 def index(request):
     """A página inicial do app Fichas Catalográficas"""
     if request.method == 'GET':
@@ -32,30 +43,14 @@ def index(request):
         form = FichaForm(request.POST)
         if form.is_valid():
             nova_ficha = form.save(commit=False)
-<<<<<<< HEAD
 
             request = salvaInformacoes(request, nova_ficha)
 
-=======
-            request.session['nome'] = nova_ficha.nome
-            request.session['sobrenome'] = nova_ficha.sobrenome
-            request.session['cutter'] = nova_ficha.cutter
-            request.session['titulo'] = nova_ficha.titulo
-            request.session['sub_titulo'] = nova_ficha.sub_titulo
-            request.session['curso'] = nova_ficha.curso
-            request.session['ano'] = nova_ficha.ano
-            request.session['orientador'] = nova_ficha.orientador
-            request.session['coorientador'] = nova_ficha.coorientador
-            request.session['tipo_trabalho'] = nova_ficha.tipo_trabalho
-            request.session['fonte'] = nova_ficha.fonte
-            request.session['tamanho_fonte'] = nova_ficha.tamanho_fonte
->>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
             return HttpResponseRedirect(reverse('fichas:ficha'))
 
     context = {'form': form}
     return render(request, 'fichas/index.html', context)
 
-<<<<<<< HEAD
 def salvaInformacoes(request, nova_ficha):
     """Salva as informações do formulário para serem impressas na ficha"""
     request.session['nome'] = nova_ficha.nome
@@ -67,10 +62,16 @@ def salvaInformacoes(request, nova_ficha):
     request.session['instituicao'] = nova_ficha.instituicao
     request.session['cidade'] = nova_ficha.cidade
     request.session['ano'] = nova_ficha.ano
+    
     request.session['folhas'] = nova_ficha.folhas
+    request.session['figuras'] = nova_ficha.figuras
+    request.session['encardenacao'] = nova_ficha.encardenacao
+    
     request.session['orientador'] = nova_ficha.orientador
     request.session['coorientador'] = nova_ficha.coorientador
-    request.session['figuras'] = nova_ficha.figuras
+    
+    request.session['referencias'] = nova_ficha.referencias
+    request.session['anexos'] = nova_ficha.anexos
 
     request.session['assunto1'] = nova_ficha.assunto1
     request.session['assunto2'] = nova_ficha.assunto2
@@ -81,7 +82,10 @@ def salvaInformacoes(request, nova_ficha):
     request.session['tipo_trabalho'] = nova_ficha.tipo_trabalho
     request.session['titulo_obtido'] = nova_ficha.titulo_obtido
     request.session['fonte'] = nova_ficha.fonte
-    request.session['tamanho_fonte'] = nova_ficha.tamanho_fonte
+    if nova_ficha.fonte == 'Arial':
+        request.session['tamanho_fonte'] = 10
+    else:
+        request.session['tamanho_fonte'] = 11
     
     return request
 
@@ -89,22 +93,13 @@ def ficha(request):
     """Página onde o documento em pdf é gerado"""
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition']='inline; filename="ficha-catalográfica.pdf"'
-=======
-def ficha(request):
-    """Página onde o documento em pdf é gerado"""
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition']='inline; filename="Ficha Catalográfica.pdf"'
->>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
+
     draw_canvas = canvas.Canvas(response)
 
     draw_canvas = defineFonte(request, draw_canvas)
     draw_canvas = desenhaRetangulo(request, draw_canvas)
-<<<<<<< HEAD
     draw_canvas = criaFicha(request, draw_canvas)
-=======
-    draw_canvas = escreveInformacoes(request, draw_canvas)
->>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
-
+    
     draw_canvas.showPage()
     draw_canvas.save()
     return response
@@ -113,11 +108,15 @@ def defineFonte(request, draw_canvas):
     """Define a fonte da ficha"""
     monospace_font = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
     arial_font = "/usr/share/fonts/truetype/msttcorefonts/arial.ttf"
+    arial_bold_font = "/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf"
     times_font = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"
+    times_bold_font = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf"
 
     pdfmetrics.registerFont(TTFont('Monospace', monospace_font))
     pdfmetrics.registerFont(TTFont('Arial', arial_font))
+    pdfmetrics.registerFont(TTFont('Arial_Bold', arial_bold_font))
     pdfmetrics.registerFont(TTFont('Times', times_font))
+    pdfmetrics.registerFont(TTFont('Times_Bold', times_bold_font))
 
     draw_canvas.setFont(request.session['fonte'], request.session['tamanho_fonte'])
 
@@ -131,10 +130,9 @@ def defineFonte(request, draw_canvas):
 
 def desenhaRetangulo(request, draw_canvas):
     """Desenha o retângulo padrão de ficha catalográfica"""
-<<<<<<< HEAD
     draw_canvas.setLineWidth(0.1)
     #draw_canvas.setStrokeColor((158, 158, 158))
-    draw_canvas.rect(4*cm, 3*cm, 12.5*cm, 7.5*cm, stroke=1, fill=False)
+    draw_canvas.rect(4*cm, 5.5*cm, 13.5*cm, 7.5*cm, stroke=1, fill=False)
     return draw_canvas
 
 def criaFicha(request, draw_canvas):
@@ -142,34 +140,51 @@ def criaFicha(request, draw_canvas):
     linhas.clear()
     
     # Pré-processamento das informações
+    nome = processaNome(request)
     pista = processaPista(request)
     cutter = processaCutter(request)
     titulo = processaTitulo(request)
-    figuras = processaFiguras(request)
+    trabalho = processaTrabalho(request)
     
     # Processamento das informações
-    linhas.append(request.session['sobrenome'] + ", " + request.session['nome'])
+    linhas.append(nome)
     linhas.append(titulo)
-    linhas.append(figuras)
-    linhas.append(request.session['tipo_trabalho'] + " (" + request.session['titulo_obtido'] + " em " + request.session['curso'] + ") - " + request.session['instituicao'] + ", " + request.session['cidade'] + ", " + str(request.session['ano']) + ".")
-    linhas.append("Orientação: " + request.session['orientador'] + ".")
+    linhas.append(trabalho)
+    linhas.append("Orientação: Prof(a). " + request.session['orientador'] + ".")
+    linhas.append(request.session['tipo_trabalho'] + " (" + request.session['titulo_obtido'] + ") - " + request.session['instituicao'] + ", curso de " + request.session['curso'] + ".")
+    linhas.append("Referências bibliográficas: f." + str(request.session['referencias']))
+    linhas.append("Anexos: f." + str(request.session['anexos']))
     linhas.append(pista)
     
     # Impressão das informações na ficha
+    draw_canvas = escreveCabecalho(draw_canvas, request)
+    draw_canvas = escreveRodape(draw_canvas, request)
     draw_canvas = escreveCutter(draw_canvas, cutter)
+    draw_canvas = escreveCdd(draw_canvas)
     
-    for i in range(0, 6):
-        draw_canvas = escreveInformacoes(draw_canvas, selecionaBloco(i), i)
-        
     global topo_res
-    topo_res = 9.5
+    topo_res = 12.3
+    
+    for i in range(0, len(linhas)):
+        draw_canvas = escreveInformacoes(draw_canvas, selecionaBloco(i, request), i)
+        
+    topo_res = 12
     
     return draw_canvas
+    
+def processaNome(request):
+    """Arruma o bloco de nome antes de imprimir na ficha"""
+    nome = request.session['sobrenome'] + ", " + request.session['nome']
+    
+    global recuo
+    recuo = stringWidth(nome[:4], request.session['fonte'], request.session['tamanho_fonte'])/cm
+    
+    return nome
 
 def processaPista(request):
     """Arruma o bloco de assuntos antes de imprimir na ficha"""
     pista = ""
-    for i in range(1, 7):
+    for i in range(1, 6):
         if request.session['assunto' + str(i)] is None:
             break
         pista += str(i) + ". " + request.session['assunto' + str(i)] + ". "
@@ -177,9 +192,41 @@ def processaPista(request):
     return pista
     
 def processaCutter(request):
-    """Arruma o cutter antes de imprimir na ficha"""
-    cutter = request.session['sobrenome'][0] + request.session['cutter'] + request.session['titulo'][0].lower()
-    return cutter
+    """Cria o dicionário com os valores do arquivo cutter.csv"""
+    nome = request.session['sobrenome']
+    
+    with open('fichas/static/csv/cutter.csv', 'r') as arquivo:
+        leitor = csv.DictReader(arquivo)
+        dicionario = {}
+        for linha in leitor:
+            dicionario[removeAcentuacao(linha['texto']).lower()] = linha['codigo']
+        lista = list(dicionario.items())
+        lista = sorted(lista, key=lambda x: x[0])
+    cutter = selecionaCutter(removeAcentuacao(nome).lower(), lista, 0)
+    return nome[0].title() + str(cutter) + request.session['titulo'][0].lower()
+    
+def selecionaCutter(nome, lista, i):
+    """Função recursiva que seleciona o par chave - valor correto"""
+    nova_lista = []
+    
+    for tupla in lista:
+        if i >= len(nome):
+            return int(lista[0][1])
+            
+        if i >= len(tupla[0]):
+            continue
+            
+        if nome[i] == tupla[0][i]:
+            nova_lista.append(tupla)
+    
+    if nova_lista:
+        return selecionaCutter(nome, nova_lista, i + 1)
+    else:
+        return lista[0][1]
+
+def removeAcentuacao(texto):
+    """Remove a acentuação do texto"""
+    return normalize('NFKD', texto).encode('ASCII', 'ignore').decode('ASCII')
     
 def processaTitulo(request):
     """Arruma o bloco de titulo antes de imprimir na ficha"""
@@ -187,92 +234,135 @@ def processaTitulo(request):
     if request.session['sub_titulo'] is None:
         titulo = request.session['titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". - " + str(request.session['ano']) + "."
     else:
-        titulo = request.session['titulo'] + ": " + request.session['sub_titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". - " + str(request.session['ano']) + "."
+        titulo = request.session['titulo'] + ": " + request.session['sub_titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". " + request.session['cidade'] +" - TO, " + str(request.session['ano']) + "."
     return titulo
 
-def processaFiguras(request):
+def processaTrabalho(request):
     """Define se existe ou não figuras antes de imprimir na ficha"""
     figuras = str(request.session['folhas']) + "f."
     if request.session['figuras'] == 'Sim':
-        figuras += " : il."
+        figuras += " il. "
+    figuras += 'enc.' + request.session['encardenacao'].lower() + '. capa dura'
     return figuras
 
-def selecionaBloco(index):
+def selecionaBloco(index, request):
     """Seleciona o bloco de linhas correspondente"""
     linha = linhas[index]
     bloco = []
+    para_prox_linha = ""
     linha_formatada = ""
     
     for i in range(0, len(linha)):
+        linha_formatada += para_prox_linha
+        para_prox_linha = ""
         linha_formatada += linha[i]
-        if (i % 50 == 0 and i != 0) or i == len(linha) - 1:
-            if linha[i].isalpha() and i != len(linha) - 1:
-                linha_formatada += '-'
+        largura = stringWidth(linha_formatada, request.session['fonte'], request.session['tamanho_fonte'])/cm
+        if (largura >= 10.2):
+            for j in range(len(linha_formatada) - 1, 0, -1):
+                if linha_formatada[j] != ' ':
+                    para_prox_linha = linha_formatada[j] + para_prox_linha
+                    linha_formatada = linha_formatada[:-1]
+                else:
+                    break
             bloco.append(linha_formatada)
             linha_formatada = ""
     
+    if linha_formatada is not None:
+        bloco.append(linha_formatada)
+    
     return bloco
+    
+def escreveCabecalho(draw_canvas, request):
+    """Escreve o cabeçalho da ficha"""
+    draw_canvas.setFont(request.session['fonte'] + '_Bold', request.session['tamanho_fonte'])
+    cabecalho1 = "Dados de Catalogação na publicação (CIP) Internacional"
+    cabecalho2 = "(Seção de processamento técnico da Biblioteca Serra do Carmo)"
+    largura1 = stringWidth(cabecalho1, request.session['fonte'], request.session['tamanho_fonte'])
+    largura2 = stringWidth(cabecalho2, request.session['fonte'], request.session['tamanho_fonte'])
+    draw_canvas.drawString((largura_pagina - largura1)/2, (topo_res + 2)*cm, cabecalho1)
+    draw_canvas.drawString((largura_pagina - largura2)/2, (topo_res + 1.5)*cm, cabecalho2)
+    draw_canvas.setFont(request.session['fonte'], request.session['tamanho_fonte'])
+    return draw_canvas
+    
+def escreveRodape(draw_canvas, request):
+    """Escreve o rodapé da ficha"""
+    global assuntos
+    reducao = 7.2
+    passo = 0.5
+    
+    rodape = "Índices para catalógo sistemático:"
+    draw_canvas.drawString((esquerda - 1.5)*cm, (topo_res - reducao)*cm, rodape)
+    assuntos = retornaAssuntos(request)
+    reducao += passo
+    
+    i = 1
+    for assunto in assuntos:
+        texto = str(i) + '. ' + assunto[1] + ' ' + assunto[0]
+        draw_canvas.drawString((esquerda - 1.5)*cm, (topo_res - (reducao + passo))*cm, texto)
+        i += 1
+        passo += 0.5
+    return draw_canvas
+    
+def retornaAssuntos(request):
+    """Retorna os assuntos e códigos correspondentes armazeandos no .csv"""
+    assuntos = []
+    with open('fichas/static/csv/cdd.csv', 'r') as arquivo:
+        leitor = csv.DictReader(arquivo)
+        dicionario = {}
+        for linha in leitor:
+            dicionario[linha['cdd']] = linha['assunto']
+        assuntos = list(dicionario.items())
+        assuntos = sorted(assuntos, key=lambda x: x[0])
+    
+    lista = []
+    i = 1
+    while i < 6:
+        for assunto in assuntos:
+            a = request.session['assunto' + str(i)]
+            if a is not None and assunto[1] == a:
+                lista.append(assunto)
+                break
+        i += 1
+    
+    return lista
     
 def escreveCutter(draw_canvas, cutter):
     """Escreve o cutter gerado"""
-    esquerda = 4.5
-    draw_canvas.drawString(esquerda*cm, (topo_res - passada_vert)*cm, cutter)
+    global esquerda
+    margem = esquerda - 1.5
+    draw_canvas.drawString(margem*cm, (12.3 - passada_vert)*cm, cutter)
+    return draw_canvas
+    
+def escreveCdd(draw_canvas):
+    """Escreve o cdd correspondente ao assunto principal"""
+    draw_canvas.drawString((esquerda + 8.5)*cm, (topo_res - 6)*cm, 'CDD - ' + assuntos[0][0])
     return draw_canvas
 
 def escreveInformacoes(draw_canvas, bloco, index):
     """Escreve as informações passadas pelo usuário"""
+    global esquerda
     global topo_res
-    esquerda = 6
     topo = topo_res
-    esquerda = adicionaMargem(index, esquerda)
+    margem = adicionaMargem(index, esquerda)
     
     for i in range(0, len(bloco)):
-        draw_canvas.drawString(esquerda*cm, topo*cm, bloco[i])
-        esquerda = 6
+        draw_canvas.drawString(margem*cm, topo*cm, bloco[i])
+        margem = 6
         topo -= passada_vert
     topo_res = topo
     adicionaNovaLinha(index, topo)
 
     return draw_canvas
 
-def adicionaMargem(i, esquerda):
+def adicionaMargem(i, margem):
     """Adiciona a margem se necessário"""
-    if i == 1 or i == 2 or i == 3 or i == 4 or i == 5:
-        esquerda += 0.8
-    return esquerda
+    if i != 0:
+        margem += recuo
+    return margem
 
 def adicionaNovaLinha(i, topo):
     """Adiciona uma nova linha se necessário"""
     global topo_res
-    if i == 2 or i == 4:
-        topo -= 0.5
+    if i == 1 or i == 2 or i == 4 or i == 6:
+        topo -= 0.3
     topo_res = topo
-=======
-    draw_canvas.rect(4*cm, 3*cm, 12.5*cm, 7.5*cm, fill=False)
-    return draw_canvas
-
-def escreveInformacoes(request, draw_canvas):
-    """Escre as informações passadas pelo usuário por meio do formulário"""
-
-    draw_canvas.drawString(4.5*cm, 9*cm, request.session['sobrenome'] + ", " +
-        request.session['nome'])
-
-    draw_canvas.drawString(4.5*cm, 8.5*cm, "d" + request.session['cutter'] +
-        "t    " + request.session['titulo'] + " / " + request.session['nome'] +
-        " " + request.session['sobrenome'] + "; " + " orientador " +
-        request.session['orientador'] + " co-orientador " +
-        request.session['coorientador'] + ". -- Palmas. " +
-        str(request.session['ano']) + ". 34p.")
-
-    draw_canvas.drawString(4.5*cm, 8*cm, request.session['tipo_trabalho'] +
-        " (" + request.session['curso'] + ") -- " +
-        "Faculdade Serra do Carmo, " + str(request.session['ano']) + ".")
-
-    draw_canvas.drawString(4.5*cm, 7.5*cm, request.session['curso'])
-    draw_canvas.drawString(4.5*cm, 7*cm, str(request.session['ano']))
-    draw_canvas.drawString(4.5*cm, 6.5*cm, request.session['orientador'])
-    draw_canvas.drawString(4.5*cm, 6*cm, request.session['coorientador'])
-    draw_canvas.drawString(4.5*cm, 5.5*cm, request.session['tipo_trabalho'])
-
-    return draw_canvas
->>>>>>> 588ebd80e15dd4246742cd026d53a3ee5e2d4e39
