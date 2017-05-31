@@ -12,7 +12,7 @@
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    <link rel="stylesheet" href="{% static 'css/fichas.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fichas.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo-fasec.png' %}">
   </head>
 
@@ -34,27 +34,576 @@
     <header class="row"> <!-- Exibe o título e o nome da instituição -->
       <div class="jumbotron">
         <div class="container">
-          <h2>Faculdade Serra do Carmo</h2>
-          <h3>Gerador de Fichas Catalográficas</h3>
+          <h2>Gerador de Fichas Catalográficas</h2>
+          <h3>Preencha os campos para gerar a sua ficha catalográfica. Campos
+              marcados com asteriscos (*) são obrigatórios.</h3>
         </div>
       </div>
     </header>
 
     <div class="row">
-      <div class="col-md-2"></div>
+      <div class="col-md-2">
+      </div>
       <div role="main" class="col-md-8" id="formdiv"> <!-- Exibe o formulário -->
-        <form action="{% url 'fichas:index' %}" method="post" target="_blank"
-        class="form">
+        <form action="{% url 'fichas:index' %}" method="post" target="_blank" class="form">
           {% csrf_token %}
           
-          {% bootstrap_form form layout='horizontal' %}
+          <h2>Dados pessoais</h2>
+          <h3>São os seus dados de identificação.</h3>
+          
+          <div class="form-group">
+            <label class="control-label" for="id_nome">Nome*:</label>
+            <input type="text" name="nome" placeholder="Nome completo (menos último nome)" id="id_nome" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_sobrenome">Último nome*:</label>
+            <input type="text" name="sobrenome" placeholder="Último nome" id="id_sobrenome" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_instituicao">Instituição de ensino*:</label>
+            <input type="text" name="instituicao" value="Faculdade Serra do Carmo" placeholder="Instituição de ensino" id="id_instituicao" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_curso">Curso*:</label>
+            <input type="text" name="curso" value="Direito" placeholder="Curso" id="id_curso" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_titulo_obtido">Título obtido*:</label>
+            <select name="titulo_obtido" class="form-control" id="id_titulo_obtido" title="">
+              <option value="Bacharel">Bacharel</option>
 
+              <option value="Mestre">Mestre</option>
+
+              <option value="Doutor">Doutor</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_cidade">Cidade*:</label>
+            <input type="text" name="cidade" value="Palmas" placeholder="Cidade" id="id_cidade" title="" class="form-control" required maxlength="100" />
+          </div>
+          
+          <h2>Dados do trabalho</h2>
+          <h3>São os dados referentes ao trabalho realizado.</h3>
+          
+          <div class="form-group">
+            <label class="control-label" for="id_titulo">Título*:</label>
+            <input type="text" name="titulo" placeholder="Título do trabalho" id="id_titulo" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_sub_titulo">Sub-título:</label>
+            <input type="text" name="sub_titulo" placeholder="Sub-título (opcional)" id="id_sub_titulo" title="" class="form-control" maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_ano">Ano*:</label>
+            <input type="number" name="ano" value="2017" placeholder="Ano de apresentação do trabalho" id="id_ano" title="" class="form-control" required min="0" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_orientador">Orientador*:</label>
+            <input type="text" name="orientador" placeholder="Nome completo do(a) orientador(a)" id="id_orientador" title="" class="form-control" required maxlength="200" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_tipo_trabalho">Tipo do trabalho*:</label>
+            <select name="tipo_trabalho" class="form-control" id="id_tipo_trabalho" title="">
+              <option value="Monografia" selected>Monografia</option>
+
+              <option value="Dissertação">Dissertação</option>
+
+              <option value="Tese">Tese</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_folhas">Número de folhas*:</label>
+            <input type="number" name="folhas" value="1" placeholder="Número de folhas" id="id_folhas" title="" class="form-control" required min="0" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_figuras">O trabalho possui figuras?</label>
+            <select name="figuras" class="form-control" id="id_figuras" title="">
+              <option value="Sim" selected>Sim</option>
+
+              <option value="Nao">Não</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_referencias">Nº da folha em que começam as referências bibliográficas*:</label>
+            <input type="number" name="referencias" value="1" placeholder="Nº da folha em que começam as referências bibliográficas" id="id_referencias" title="" class="form-control" required min="0" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_anexos">Nº da folha em que começam os anexos:</label>
+            <input type="number" name="anexos" value="1" placeholder="Nº da folha em que começam os anexos" id="id_anexos" title="" class="form-control" min="0" />
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_encardenacao">Tipo de encardenação*:</label>
+            <select name="encardenacao" class="form-control" id="id_encardenacao" title="">
+              <option value="Brochura" selected>Brochura</option>
+
+              <option value="Espiral">Espiral</option>
+
+            </select>
+          </div>
+          
+          <h2>Assuntos do trabalho</h2>
+          <h3>Os assuntos da área de direito relacionados ao seu trabalho. 
+              Selecione ao menos um assunto.</h3>
+          
+          <div class="form-group">
+            <label class="control-label" for="id_assunto1">Assunto 1*:</label>
+            <select name="assunto1" class="form-control" id="id_assunto1" title="">
+              <option value="Direito" selected>Direito</option>
+
+              <option value="Direito Público">Direito Público</option>
+
+              <option value="Direito Internacional Público">Direito Internacional Público</option>
+
+              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
+
+              <option value="Direito Constitucional">Direito Constitucional</option>
+
+              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
+
+              <option value="Direito Eleitoral">Direito Eleitoral</option>
+
+              <option value="Direito Administrativo">Direito Administrativo</option>
+
+              <option value="Direito Ambiental">Direito Ambiental</option>
+
+              <option value="Direito Econômico">Direito Econômico</option>
+
+              <option value="Direito Financeiro">Direito Financeiro</option>
+
+              <option value="Direito Tributário">Direito Tributário</option>
+
+              <option value="Direito Processual">Direito Processual</option>
+
+              <option value="Direito Processual Penal">Direito Processual Penal</option>
+
+              <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+              <option value="Direito Penal">Direito Penal</option>
+
+              <option value="Direito Penitenciário">Direito Penitenciário</option>
+
+              <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+              <option value="Direito Militar">Direito Militar</option>
+
+              <option value="Direito Penal Militar">Direito Penal Militar</option>
+
+              <option value="Direito Aéreo">Direito Aéreo</option>
+
+              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
+
+              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
+
+              <option value="Direito Espacial">Direito Espacial</option>
+
+              <option value="Direito Privado">Direito Privado</option>
+
+              <option value="Direito Civil">Direito Civil</option>
+
+              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
+
+              <option value="Direito de Família">Direito de Família</option>
+
+              <option value="Direito das Sucessões">Direito das Sucessões</option>
+
+              <option value="Direito do Menor">Direito do Menor</option>
+
+              <option value="Direito Comercial">Direito Comercial</option>
+
+              <option value="Direito Bancário">Direito Bancário</option>
+
+              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
+
+              <option value="Direito autoral">Direito autoral</option>
+
+              <option value="Direito Marítimo">Direito Marítimo</option>
+
+              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
+
+              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
+
+              <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+              <option value="Direito do Trabalho">Direito do Trabalho</option>
+
+              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_assunto2">Assunto 2:</label>
+            <select name="assunto2" class="form-control" id="id_assunto2" title="">
+              <option value="" selected>---------</option>
+
+              <option value="Direito">Direito</option>
+
+              <option value="Direito Público">Direito Público</option>
+
+              <option value="Direito Internacional Público">Direito Internacional Público</option>
+
+              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
+
+              <option value="Direito Constitucional">Direito Constitucional</option>
+
+              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
+
+              <option value="Direito Eleitoral">Direito Eleitoral</option>
+
+              <option value="Direito Administrativo">Direito Administrativo</option>
+
+              <option value="Direito Ambiental">Direito Ambiental</option>
+
+              <option value="Direito Econômico">Direito Econômico</option>
+
+              <option value="Direito Financeiro">Direito Financeiro</option>
+
+              <option value="Direito Tributário">Direito Tributário</option>
+
+              <option value="Direito Processual">Direito Processual</option>
+
+              <option value="Direito Processual Penal">Direito Processual Penal</option>
+
+              <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+              <option value="Direito Penal">Direito Penal</option>
+
+              <option value="Direito Penitenciário">Direito Penitenciário</option>
+
+              <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+              <option value="Direito Militar">Direito Militar</option>
+
+              <option value="Direito Penal Militar">Direito Penal Militar</option>
+
+              <option value="Direito Aéreo">Direito Aéreo</option>
+
+              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
+
+              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
+
+              <option value="Direito Espacial">Direito Espacial</option>
+
+              <option value="Direito Privado">Direito Privado</option>
+
+              <option value="Direito Civil">Direito Civil</option>
+
+              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
+
+              <option value="Direito de Família">Direito de Família</option>
+
+              <option value="Direito das Sucessões">Direito das Sucessões</option>
+
+              <option value="Direito do Menor">Direito do Menor</option>
+
+              <option value="Direito Comercial">Direito Comercial</option>
+
+              <option value="Direito Bancário">Direito Bancário</option>
+
+              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
+
+              <option value="Direito autoral">Direito autoral</option>
+
+              <option value="Direito Marítimo">Direito Marítimo</option>
+
+              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
+
+              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
+
+              <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+              <option value="Direito do Trabalho">Direito do Trabalho</option>
+
+              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_assunto3">Assunto 3:</label>
+            <select name="assunto3" class="form-control" id="id_assunto3" title="">
+              <option value="" selected>---------</option>
+
+              <option value="Direito">Direito</option>
+
+              <option value="Direito Público">Direito Público</option>
+
+              <option value="Direito Internacional Público">Direito Internacional Público</option>
+
+              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
+
+              <option value="Direito Constitucional">Direito Constitucional</option>
+
+              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
+
+              <option value="Direito Eleitoral">Direito Eleitoral</option>
+
+              <option value="Direito Administrativo">Direito Administrativo</option>
+
+              <option value="Direito Ambiental">Direito Ambiental</option>
+
+              <option value="Direito Econômico">Direito Econômico</option>
+
+              <option value="Direito Financeiro">Direito Financeiro</option>
+
+              <option value="Direito Tributário">Direito Tributário</option>
+
+              <option value="Direito Processual">Direito Processual</option>
+
+              <option value="Direito Processual Penal">Direito Processual Penal</option>
+
+              <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+              <option value="Direito Penal">Direito Penal</option>
+
+              <option value="Direito Penitenciário">Direito Penitenciário</option>
+
+              <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+              <option value="Direito Militar">Direito Militar</option>
+
+              <option value="Direito Penal Militar">Direito Penal Militar</option>
+
+              <option value="Direito Aéreo">Direito Aéreo</option>
+
+              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
+
+              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
+
+              <option value="Direito Espacial">Direito Espacial</option>
+
+              <option value="Direito Privado">Direito Privado</option>
+
+              <option value="Direito Civil">Direito Civil</option>
+
+              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
+
+              <option value="Direito de Família">Direito de Família</option>
+
+              <option value="Direito das Sucessões">Direito das Sucessões</option>
+
+              <option value="Direito do Menor">Direito do Menor</option>
+
+              <option value="Direito Comercial">Direito Comercial</option>
+
+              <option value="Direito Bancário">Direito Bancário</option>
+
+              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
+
+              <option value="Direito autoral">Direito autoral</option>
+
+              <option value="Direito Marítimo">Direito Marítimo</option>
+
+              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
+
+              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
+
+              <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+              <option value="Direito do Trabalho">Direito do Trabalho</option>
+
+              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_assunto4">Assunto 4:</label>
+            <select name="assunto4" class="form-control" id="id_assunto4" title="">
+              <option value="" selected>---------</option>
+
+              <option value="Direito">Direito</option>
+
+              <option value="Direito Público">Direito Público</option>
+
+              <option value="Direito Internacional Público">Direito Internacional Público</option>
+
+              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
+
+              <option value="Direito Constitucional">Direito Constitucional</option>
+
+              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
+
+              <option value="Direito Eleitoral">Direito Eleitoral</option>
+
+              <option value="Direito Administrativo">Direito Administrativo</option>
+
+              <option value="Direito Ambiental">Direito Ambiental</option>
+
+              <option value="Direito Econômico">Direito Econômico</option>
+
+              <option value="Direito Financeiro">Direito Financeiro</option>
+
+              <option value="Direito Tributário">Direito Tributário</option>
+
+              <option value="Direito Processual">Direito Processual</option>
+
+              <option value="Direito Processual Penal">Direito Processual Penal</option>
+
+              <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+              <option value="Direito Penal">Direito Penal</option>
+
+              <option value="Direito Penitenciário">Direito Penitenciário</option>
+
+              <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+              <option value="Direito Militar">Direito Militar</option>
+
+              <option value="Direito Penal Militar">Direito Penal Militar</option>
+
+              <option value="Direito Aéreo">Direito Aéreo</option>
+
+              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
+
+              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
+
+              <option value="Direito Espacial">Direito Espacial</option>
+
+              <option value="Direito Privado">Direito Privado</option>
+
+              <option value="Direito Civil">Direito Civil</option>
+
+              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
+
+              <option value="Direito de Família">Direito de Família</option>
+
+              <option value="Direito das Sucessões">Direito das Sucessões</option>
+
+              <option value="Direito do Menor">Direito do Menor</option>
+
+              <option value="Direito Comercial">Direito Comercial</option>
+
+              <option value="Direito Bancário">Direito Bancário</option>
+
+              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
+
+              <option value="Direito autoral">Direito autoral</option>
+
+              <option value="Direito Marítimo">Direito Marítimo</option>
+
+              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
+
+              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
+
+              <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+              <option value="Direito do Trabalho">Direito do Trabalho</option>
+
+              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="id_assunto5">Assunto 5:</label>
+            <select name="assunto5" class="form-control" id="id_assunto5" title="">
+              <option value="" selected>---------</option>
+
+              <option value="Direito">Direito</option>
+
+              <option value="Direito Público">Direito Público</option>
+
+              <option value="Direito Internacional Público">Direito Internacional Público</option>
+
+              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
+
+              <option value="Direito Constitucional">Direito Constitucional</option>
+
+              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
+
+              <option value="Direito Eleitoral">Direito Eleitoral</option>
+
+              <option value="Direito Administrativo">Direito Administrativo</option>
+
+              <option value="Direito Ambiental">Direito Ambiental</option>
+
+              <option value="Direito Econômico">Direito Econômico</option>
+
+              <option value="Direito Financeiro">Direito Financeiro</option>
+
+              <option value="Direito Tributário">Direito Tributário</option>
+
+              <option value="Direito Processual">Direito Processual</option>
+
+              <option value="Direito Processual Penal">Direito Processual Penal</option>
+
+              <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+              <option value="Direito Penal">Direito Penal</option>
+
+              <option value="Direito Penitenciário">Direito Penitenciário</option>
+
+              <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+              <option value="Direito Militar">Direito Militar</option>
+
+              <option value="Direito Penal Militar">Direito Penal Militar</option>
+
+              <option value="Direito Aéreo">Direito Aéreo</option>
+
+              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
+
+              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
+
+              <option value="Direito Espacial">Direito Espacial</option>
+
+              <option value="Direito Privado">Direito Privado</option>
+
+              <option value="Direito Civil">Direito Civil</option>
+
+              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
+
+              <option value="Direito de Família">Direito de Família</option>
+
+              <option value="Direito das Sucessões">Direito das Sucessões</option>
+
+              <option value="Direito do Menor">Direito do Menor</option>
+
+              <option value="Direito Comercial">Direito Comercial</option>
+
+              <option value="Direito Bancário">Direito Bancário</option>
+
+              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
+
+              <option value="Direito autoral">Direito autoral</option>
+
+              <option value="Direito Marítimo">Direito Marítimo</option>
+
+              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
+
+              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
+
+              <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+              <option value="Direito do Trabalho">Direito do Trabalho</option>
+
+              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
+
+            </select>
+          </div>
+          
+          <h2>Opções de formatação</h2>
+          <h3>Opções relacionadas à formatação da ficha.</h3>
+          
+          <div class="form-group">
+            <label class="control-label" for="id_fonte">Fonte:</label>
+            <select name="fonte" class="form-control" id="id_fonte" title="">
+              <option value="Arial">Arial</option>
+
+              <option value="Times" selected>Times New Roman</option>
+
+            </select>
+          </div>
+          
+          <!-- {% bootstrap_form form %} -->
+          
           {% buttons %}
             <button name="submit" class="btn btn-primary">Gerar ficha</button>
           {% endbuttons %}
         </form>
       </div> <!-- Fecha div do formulário -->
-      <div class="col-md-2"></div>
+      <div class="col-md-2">
+      </div>
     </div>
 
     <footer class="row"> <!-- Exibe uma mensagem no rodapé -->
@@ -62,6 +611,7 @@
       do Carmo</p>
     </footer>
 
-    </div><!-- Fecha div geral (container) -->
+    </div>
+    <!-- Fecha div geral (container) -->
   </body>
 </html>

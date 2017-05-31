@@ -14,6 +14,16 @@
     color: #ffffff;
 }
 
+h2 {
+    padding-top: 30px;
+    color: #787878;
+}
+
+h3 {
+    padding-bottom: 20px;
+    color: #aaaaaa;
+}
+
 header {
     color: black;
     font-family: "Verdana", Arial, sans-serif;
@@ -22,6 +32,7 @@ header {
 div.jumbotron {
     padding-top: 120px;
     padding-bottom: 100px;
+    border-color: #125775
 }
 
 input, select {

@@ -106,13 +106,13 @@ def ficha(request):
 
 def defineFonte(request, draw_canvas):
     """Define a fonte da ficha"""
-    monospace_font = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
+    # monospace_font = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
     arial_font = "/usr/share/fonts/truetype/msttcorefonts/arial.ttf"
     arial_bold_font = "/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf"
     times_font = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"
     times_bold_font = "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf"
 
-    pdfmetrics.registerFont(TTFont('Monospace', monospace_font))
+    # pdfmetrics.registerFont(TTFont('Monospace', monospace_font))
     pdfmetrics.registerFont(TTFont('Arial', arial_font))
     pdfmetrics.registerFont(TTFont('Arial_Bold', arial_bold_font))
     pdfmetrics.registerFont(TTFont('Times', times_font))

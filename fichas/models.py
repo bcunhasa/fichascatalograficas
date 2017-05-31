@@ -77,12 +77,12 @@ class Ficha(models.Model):
     )
 
     # Modelos usados no projeto
-    nome = models.CharField(max_length=50, default='')
+    nome = models.CharField(max_length=200, default='')
     sobrenome = models.CharField(max_length=200, default='')
     cutter = models.CharField(max_length=10, default='')
     titulo = models.CharField(max_length=200, default='')
     sub_titulo = models.CharField(max_length=200, default='', blank=True, null=True)
-    curso = models.CharField(max_length=200, default='')
+    curso = models.CharField(max_length=200, default='Direito')
     instituicao = models.CharField(max_length=200, default='Faculdade Serra do Carmo')
     cidade = models.CharField(max_length=100, default='Palmas')
     ano = models.PositiveIntegerField(default=2017)
@@ -93,7 +93,7 @@ class Ficha(models.Model):
     	default='Sim'
     )
     referencias = models.PositiveIntegerField(default=1)
-    anexos = models.PositiveIntegerField(default=1)
+    anexos = models.PositiveIntegerField(default=1, blank=True, null=True)
     encardenacao = models.CharField(
         max_length=20,
         choices=ENCARDENACAO,
