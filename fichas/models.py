@@ -1,11 +1,23 @@
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
+
+from unicodedata import normalize
+import csv
+
 from django.db import models
 
 class Ficha(models.Model):
     """A ficha catalográfica padrão que será usada na aplicação"""
 
     # Opções para os campos de mútipla escolha
+    CDU = ()
+    with open('fichas/static/csv/cdu.csv', 'r') as arquivo:
+        leitor = csv.DictReader(arquivo)
+        dicionario = {}
+        for linha in leitor:
+            dicionario[linha['assunto']] = linha['assunto']
+        CDU = sorted(list(dicionario.items()))
+    
     FONTE = (
         ('Arial', 'Arial'),
         ('Times', 'Times New Roman'),
@@ -23,11 +35,29 @@ class Ficha(models.Model):
     )
     
     TITULO_OBTIDO = (
+        ('Especialista', 'Especialista'),
         ('Bacharel', 'Bacharel'),
         ('Mestre', 'Mestre'),
         ('Doutor', 'Doutor'),
     )
     
+    GENERO = (
+        ('Masculino', 'Masculino'),
+        ('Feminino', 'Feminino'),
+    )
+    
+    TITULO_ORIENTADOR = (
+        ('Especialista', 'Especialista'),
+        ('Mestre', 'Mestre'),
+        ('Doutor', 'Doutor'),
+    )
+    
+    ENCARDENACAO = (
+        ('Brochura', 'Brochura'),
+        ('Espiral', 'Espiral'),
+    )
+    
+    """
     CDD = (
         ('Direito', 'Direito'),
         ('Direito Público', 'Direito Público'),
@@ -70,20 +100,16 @@ class Ficha(models.Model):
         ('Direito do Trabalho', 'Direito do Trabalho'),
         ('Direito Processual do Trabalho', 'Direito Processual do Trabalho'),
     )
-    
-    ENCARDENACAO = (
-        ('Brochura', 'Brochura'),
-        ('Espiral', 'Espiral'),
-    )
+    """
 
     # Modelos usados no projeto
-    nome = models.CharField(max_length=200, default='')
+    nome = models.CharField(max_length=300, default='')
     sobrenome = models.CharField(max_length=200, default='')
-    cutter = models.CharField(max_length=10, default='')
-    titulo = models.CharField(max_length=200, default='')
-    sub_titulo = models.CharField(max_length=200, default='', blank=True, null=True)
+    cutter = models.CharField(max_length=20, default='')
+    titulo = models.CharField(max_length=300, default='')
+    sub_titulo = models.CharField(max_length=300, default='', blank=True, null=True)
     curso = models.CharField(max_length=200, default='Direito')
-    instituicao = models.CharField(max_length=200, default='Faculdade Serra do Carmo')
+    instituicao = models.CharField(max_length=300, default='Faculdade Serra do Carmo')
     cidade = models.CharField(max_length=100, default='Palmas')
     ano = models.PositiveIntegerField(default=2017)
     folhas = models.PositiveIntegerField(default=1)
@@ -100,8 +126,31 @@ class Ficha(models.Model):
         default='Brochura'
     )
     orientador = models.CharField(max_length=200, default='')
-    coorientador = models.CharField(max_length=200, default='', blank=True,
-        null=True)
+    genero_orientador = models.CharField(
+        max_length=20,
+        choices=GENERO,
+        default='Masculino',
+    )
+    titulo_orientador = models.CharField(
+        max_length=50,
+        choices=TITULO_ORIENTADOR,
+        default='Mestre',
+    )
+    coorientador = models.CharField(max_length=200, default='', blank=True, null=True)
+    genero_coorientador = models.CharField(
+        max_length=20,
+        choices=GENERO,
+        default='Masculino',
+        blank=True,
+        null=True,
+    )
+    titulo_coorientador = models.CharField(
+        max_length=50,
+        choices=TITULO_ORIENTADOR,
+        default='Mestre',
+        blank=True,
+        null=True,
+    )
     tipo_trabalho = models.CharField(
         max_length=12,
         choices=TIPO_TRABALHO,
@@ -113,36 +162,36 @@ class Ficha(models.Model):
         default='Bacharelado',
     )
     assunto1 = models.CharField(
-        max_length=50,
+        max_length=100,
         default='Direito',
-        choices=CDD,
+        choices=CDU,
     )
     assunto2 = models.CharField(
-        max_length=50,
+        max_length=100,
         default='',
         blank=True,
-        choices=CDD,
+        choices=CDU,
         null=True
     )
     assunto3 = models.CharField(
-        max_length=50,
+        max_length=100,
         default='',
         blank=True,
-        choices=CDD,
+        choices=CDU,
         null=True
     )
     assunto4 = models.CharField(
-        max_length=50,
+        max_length=100,
         default='',
         blank=True,
-        choices=CDD,
+        choices=CDU,
         null=True
     )
     assunto5 = models.CharField(
-        max_length=50,
+        max_length=100,
         default='',
         blank=True,
-        choices=CDD,
+        choices=CDU,
         null=True
     )
     fonte = models.CharField(

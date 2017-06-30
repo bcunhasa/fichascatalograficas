@@ -35,7 +35,7 @@ assuntos = []
 
 def index(request):
     """A página inicial do app Fichas Catalográficas"""
-    if request.method == 'GET':
+    if request.method != 'POST':
         # Requisição GET: abre formulário em branco
         form = FichaForm()
     else:
@@ -43,9 +43,7 @@ def index(request):
         form = FichaForm(request.POST)
         if form.is_valid():
             nova_ficha = form.save(commit=False)
-
             request = salvaInformacoes(request, nova_ficha)
-
             return HttpResponseRedirect(reverse('fichas:ficha'))
 
     context = {'form': form}
@@ -68,7 +66,11 @@ def salvaInformacoes(request, nova_ficha):
     request.session['encardenacao'] = nova_ficha.encardenacao
     
     request.session['orientador'] = nova_ficha.orientador
+    request.session['genero_orientador'] = nova_ficha.genero_orientador
+    request.session['titulo_orientador'] = nova_ficha.titulo_orientador
     request.session['coorientador'] = nova_ficha.coorientador
+    request.session['genero_coorientador'] = nova_ficha.genero_coorientador
+    request.session['titulo_coorientador'] = nova_ficha.titulo_coorientador
     
     request.session['referencias'] = nova_ficha.referencias
     request.session['anexos'] = nova_ficha.anexos
@@ -145,12 +147,16 @@ def criaFicha(request, draw_canvas):
     cutter = processaCutter(request)
     titulo = processaTitulo(request)
     trabalho = processaTrabalho(request)
+    orientacao = processaOrientacao(request)
+    coorientacao = processaCoorientacao(request)
     
     # Processamento das informações
     linhas.append(nome)
     linhas.append(titulo)
     linhas.append(trabalho)
-    linhas.append("Orientação: Prof(a). " + request.session['orientador'] + ".")
+    linhas.append(orientacao)
+    if coorientacao != "":
+        linhas.append(coorientacao)
     linhas.append(request.session['tipo_trabalho'] + " (" + request.session['titulo_obtido'] + ") - " + request.session['instituicao'] + ", curso de " + request.session['curso'] + ".")
     linhas.append("Referências bibliográficas: f." + str(request.session['referencias']))
     linhas.append("Anexos: f." + str(request.session['anexos']))
@@ -160,7 +166,7 @@ def criaFicha(request, draw_canvas):
     draw_canvas = escreveCabecalho(draw_canvas, request)
     draw_canvas = escreveRodape(draw_canvas, request)
     draw_canvas = escreveCutter(draw_canvas, cutter)
-    draw_canvas = escreveCdd(draw_canvas)
+    draw_canvas = escreveCdu(draw_canvas)
     
     global topo_res
     topo_res = 12.3
@@ -222,7 +228,7 @@ def selecionaCutter(nome, lista, i):
     if nova_lista:
         return selecionaCutter(nome, nova_lista, i + 1)
     else:
-        return lista[0][1]
+        return lista[len(lista) - 1][1]
 
 def removeAcentuacao(texto):
     """Remove a acentuação do texto"""
@@ -232,7 +238,7 @@ def processaTitulo(request):
     """Arruma o bloco de titulo antes de imprimir na ficha"""
     titulo = ""
     if request.session['sub_titulo'] is None:
-        titulo = request.session['titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". - " + str(request.session['ano']) + "."
+        titulo = request.session['titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". " + request.session['cidade'] + " - TO, " + str(request.session['ano']) + "."
     else:
         titulo = request.session['titulo'] + ": " + request.session['sub_titulo'] + " / " + request.session['nome'] + " " + request.session['sobrenome'] + ". " + request.session['cidade'] +" - TO, " + str(request.session['ano']) + "."
     return titulo
@@ -244,6 +250,49 @@ def processaTrabalho(request):
         figuras += " il. "
     figuras += 'enc.' + request.session['encardenacao'].lower() + '. capa dura'
     return figuras
+    
+def processaOrientacao(request):
+    """Processa as informações do orientador"""
+    orientacao = ""
+    titulo = defineTitulo(request.session['titulo_orientador'], request.session['genero_orientador'])
+    
+    if request.session['genero_orientador'] == 'Masculino':
+        orientacao = "Orientador: Prof. " + titulo + " " + request.session['orientador'] + "."
+    else:
+        orientacao = "Orientadora: Profª. " + titulo + " " + request.session['orientador'] + "."
+    return orientacao
+    
+def processaCoorientacao(request):
+    """Processa as informações do coorientador"""
+    if request.session['coorientador'] is None:
+        return ""
+    
+    coorientacao = ""
+    titulo = defineTitulo(request.session['titulo_coorientador'], request.session['genero_coorientador'])
+    
+    if request.session['genero_coorientador'] == 'Masculino':
+        coorientacao = "Coorientador: Prof. " + titulo + " " + request.session['coorientador'] + "."
+    else:
+        coorientacao = "Coorientadora: Profª. " + titulo + " " + request.session['coorientador'] + "."
+    return coorientacao
+
+def defineTitulo(titulo, genero):
+    abreviacao = ""
+    
+    if titulo == 'Especialista':
+        abreviacao = 'Esp.'
+    elif titulo == 'Mestre':
+        if genero == 'Masculino':
+            abreviacao = 'Me.'
+        else:
+            abreviacao = 'Ma.'
+    else:
+        if genero == 'Masculino':
+            abreviacao = 'Dr.'
+        else:
+            abreviacao = 'Dra.'
+        
+    return abreviacao
 
 def selecionaBloco(index, request):
     """Seleciona o bloco de linhas correspondente"""
@@ -306,11 +355,11 @@ def escreveRodape(draw_canvas, request):
 def retornaAssuntos(request):
     """Retorna os assuntos e códigos correspondentes armazeandos no .csv"""
     assuntos = []
-    with open('fichas/static/csv/cdd.csv', 'r') as arquivo:
+    with open('fichas/static/csv/cdu.csv', 'r') as arquivo:
         leitor = csv.DictReader(arquivo)
         dicionario = {}
         for linha in leitor:
-            dicionario[linha['cdd']] = linha['assunto']
+            dicionario[linha['cdu']] = linha['assunto']
         assuntos = list(dicionario.items())
         assuntos = sorted(assuntos, key=lambda x: x[0])
     
@@ -333,9 +382,9 @@ def escreveCutter(draw_canvas, cutter):
     draw_canvas.drawString(margem*cm, (12.3 - passada_vert)*cm, cutter)
     return draw_canvas
     
-def escreveCdd(draw_canvas):
-    """Escreve o cdd correspondente ao assunto principal"""
-    draw_canvas.drawString((esquerda + 8.5)*cm, (topo_res - 6)*cm, 'CDD - ' + assuntos[0][0])
+def escreveCdu(draw_canvas):
+    """Escreve o cdu correspondente ao assunto principal"""
+    draw_canvas.drawString((esquerda + 8.5)*cm, (topo_res - 6)*cm, 'CDU - ' + assuntos[0][0])
     return draw_canvas
 
 def escreveInformacoes(draw_canvas, bloco, index):
@@ -363,6 +412,6 @@ def adicionaMargem(i, margem):
 def adicionaNovaLinha(i, topo):
     """Adiciona uma nova linha se necessário"""
     global topo_res
-    if i == 1 or i == 2 or i == 4 or i == 6:
+    if i == 1 or i == 2 or i == 7:
         topo -= 0.3
     topo_res = topo

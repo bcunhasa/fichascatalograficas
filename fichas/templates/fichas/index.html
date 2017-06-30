@@ -15,603 +15,2901 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/fichas.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo-fasec.png' %}">
   </head>
-
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse" data-target="#navbar"
-          aria-expanded="false" aria-controls="navbar">
-        </button>
-        <a class="navbar-brand" href="http://www.serradocarmo.edu.br">
-          Faculdade Serra do Carmo
-        </a>
-      </div>
-    </nav>
   
+  <body>
+    <div id="topline">
+    </div>
     <div class="container-fluid">
-
-    <header class="row"> <!-- Exibe o título e o nome da instituição -->
-      <div class="jumbotron">
+      
+      <header class="row">
         <div class="container">
-          <h2>Gerador de Fichas Catalográficas</h2>
-          <h3>Preencha os campos para gerar a sua ficha catalográfica. Campos
-              marcados com asteriscos (*) são obrigatórios.</h3>
+          <div class="col-md-4">
+            <a href="http://www.serradocarmo.edu.br">
+              <img src="{% static 'images/logo-fasec.png' %}"/>
+            </a>
+          </div>
+          <div class="col-md-8">
+            <h3>Gerador de Fichas Catalográficas</h3>
+            <h4>Preencha os campos para gerar a sua ficha catalográfica.</h4>
+          </div>
+        </div>
+      </header>
+      <div id="botline" class="row"></div>
+
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div role="main" class="col-md-8" id="formdiv">
+          <form action="{% url 'fichas:index' %}" method="post" target="_blank" class="form">
+            {% csrf_token %}
+            
+            <!-- {% bootstrap_form form %} -->
+            
+            <!-- <input type='hidden' name='csrfmiddlewaretoken' value='EF8njfpc7ABC1HJwQBqZDbZsa1HEzsmkKAFxt8fRR1VmG7TbYUE5fAv9t7BwfXrs' /> -->
+            
+            <div class="bodytitle">
+              <h3>Informações pessoais</h3>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label" for="id_nome">Nome</label>
+              <input type="text" name="nome" placeholder="Nome completo (menos último nome)" class="form-control" required maxlength="300" id="id_nome" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_sobrenome">Último nome</label>
+              <input type="text" name="sobrenome" placeholder="Último nome" class="form-control" required maxlength="200" id="id_sobrenome" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_instituicao">Instituição de ensino</label>
+              <input type="text" name="instituicao" value="Faculdade Serra do Carmo" placeholder="Instituição de ensino" class="form-control" required maxlength="300" id="id_instituicao" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_curso">Curso</label>
+              <input type="text" name="curso" value="Direito" placeholder="Curso" class="form-control" required maxlength="200" id="id_curso" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_titulo_obtido">Título obtido</label>
+              <select name="titulo_obtido" id="id_titulo_obtido" class="form-control" title="">
+                <option value="Especialista">Especialista</option>
+
+                <option value="Bacharel">Bacharel</option>
+
+                <option value="Mestre">Mestre</option>
+
+                <option value="Doutor">Doutor</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_cidade">Cidade</label>
+              <input type="text" name="cidade" value="Palmas" placeholder="Cidade" class="form-control" required maxlength="100" id="id_cidade" title="" />
+            </div>
+            
+            <div class="bodytitle">
+              <div></div>
+              <h3>Informações sobre o trabalho realizado</h3>
+              <h4>O campo de sub-título é opcional.</h4>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label" for="id_titulo">Título</label>
+              <input type="text" name="titulo" placeholder="Título do trabalho" class="form-control" required maxlength="300" id="id_titulo" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_sub_titulo">Sub-título</label>
+              <input type="text" name="sub_titulo" placeholder="Sub-título do trabalho" class="form-control" maxlength="300" id="id_sub_titulo" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_ano">Ano</label>
+              <input type="number" name="ano" value="2017" placeholder="Ano" class="form-control" required id="id_ano" min="0" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_tipo_trabalho">Tipo do trabalho</label>
+              <select name="tipo_trabalho" id="id_tipo_trabalho" class="form-control" title="">
+                <option value="Monografia" selected>Monografia</option>
+
+                <option value="Dissertação">Dissertação</option>
+
+                <option value="Tese">Tese</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_folhas">Número de folhas</label>
+              <input type="number" name="folhas" value="1" placeholder="Número de folhas" class="form-control" required id="id_folhas" min="0" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_figuras">O trabalho possui figuras?</label>
+              <select name="figuras" id="id_figuras" class="form-control" title="">
+                <option value="Sim" selected>Sim</option>
+
+                <option value="Nao">Não</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_referencias">Número da folha onde estão as referências bibliográficas</label>
+              <input type="number" name="referencias" value="1" placeholder="Número da folha onde estão as referências bibliográficas" class="form-control" required id="id_referencias" min="0" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_anexos">Número da folha onde estão os anexos</label>
+              <input type="number" name="anexos" value="1" placeholder="Número da folha onde estão os anexos" class="form-control" id="id_anexos" min="0" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_encardenacao">Tipo de encardenação</label>
+              <select name="encardenacao" id="id_encardenacao" class="form-control" title="">
+                <option value="Brochura" selected>Brochura</option>
+
+                <option value="Espiral">Espiral</option>
+              </select>
+              
+            <div class="bodytitle">
+              <div></div>
+              <h3>Infomações de orientação</h3>
+            </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_orientador">Nome do orientador</label>
+              <input type="text" name="orientador" placeholder="Nome do orientador" class="form-control" required maxlength="200" id="id_orientador" title="" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_genero_orientador">Gênero do orientador</label>
+              <select name="genero_orientador" id="id_genero_orientador" class="form-control" title="">
+                <option value="Masculino" selected>Masculino</option>
+
+                <option value="Feminino">Feminino</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_titulo_orientador">Título do orientador</label>
+              <select name="titulo_orientador" id="id_titulo_orientador" class="form-control" title="">
+                <option value="Especialista">Especialista</option>
+
+                <option value="Mestre" selected>Mestre</option>
+
+                <option value="Doutor">Doutor</option>
+              </select>
+            
+            <div class="bodytitle">
+              <div></div>
+              <h3>Assuntos</h3>
+              <h4>Escolha pelo menos um assunto.</h4>
+            </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_assunto1">Assunto 1</label>
+              <select name="assunto1" id="id_assunto1" class="form-control" title="">
+                <option value=" Direito constitucional Francês"> Direito constitucional Francês</option>
+
+                <option value="Antropologia jurídica">Antropologia jurídica</option>
+
+                <option value="Antropologia política">Antropologia política</option>
+
+                <option value="Argumentação jurídica">Argumentação jurídica</option>
+
+                <option value="Arrendatário (Direitos)">Arrendatário (Direitos)</option>
+
+                <option value="Arte do Direito">Arte do Direito</option>
+
+                <option value="Assistência jurídica">Assistência jurídica</option>
+
+                <option value="Assistência jurídica gratuíta">Assistência jurídica gratuíta</option>
+
+                <option value="Ato Processual">Ato Processual</option>
+
+                <option value="Ações processórias">Ações processórias</option>
+
+                <option value="Ciência jurídica">Ciência jurídica</option>
+
+                <option value="Ciências Jurídicas">Ciências Jurídicas</option>
+
+                <option value="Codigo Processual Civil (Projeto de lei)">Codigo Processual Civil (Projeto de lei)</option>
+
+                <option value="Comunicação Jurídica">Comunicação Jurídica</option>
+
+                <option value="Consumidor (Política governamental)">Consumidor (Política governamental)</option>
+
+                <option value="Cultura Jurídica">Cultura Jurídica</option>
+
+                <option value="Dano ambiental (Direito)">Dano ambiental (Direito)</option>
+
+                <option value="Democracia - Direito público">Democracia - Direito público</option>
+
+                <option value="Direiro penal (Brasil)">Direiro penal (Brasil)</option>
+
+                <option value="Direito" selected>Direito</option>
+
+                <option value="Direito (Alemanha)">Direito (Alemanha)</option>
+
+                <option value="Direito (Brasil)">Direito (Brasil)</option>
+
+                <option value="Direito (Estrutura histórica)">Direito (Estrutura histórica)</option>
+
+                <option value="Direito (Grecia)">Direito (Grecia)</option>
+
+                <option value="Direito (História)">Direito (História)</option>
+
+                <option value="Direito (Idade media)">Direito (Idade media)</option>
+
+                <option value="Direito (Leis de proteção da infância)">Direito (Leis de proteção da infância)</option>
+
+                <option value="Direito (Missões Jesuíticas)">Direito (Missões Jesuíticas)</option>
+
+                <option value="Direito (Moderno)">Direito (Moderno)</option>
+
+                <option value="Direito (Mundo Ocidental)">Direito (Mundo Ocidental)</option>
+
+                <option value="Direito (Regime militar)">Direito (Regime militar)</option>
+
+                <option value="Direito (Sistema administrativo)">Direito (Sistema administrativo)</option>
+
+                <option value="Direito (Trabalhos finais de curso)">Direito (Trabalhos finais de curso)</option>
+
+                <option value="Direito - Educação (Criança)">Direito - Educação (Criança)</option>
+
+                <option value="Direito - Juizados especiais (Brasil)">Direito - Juizados especiais (Brasil)</option>
+
+                <option value="Direito - dicionário - língua portuguesa - Brasil">Direito - dicionário - língua portuguesa - Brasil</option>
+
+                <option value="Direito Administrativo e Direito tributário">Direito Administrativo e Direito tributário</option>
+
+                <option value="Direito Administrativo especializado">Direito Administrativo especializado</option>
+
+                <option value="Direito Administrativo geral">Direito Administrativo geral</option>
+
+                <option value="Direito Ambiental">Direito Ambiental</option>
+
+                <option value="Direito Ambiental (Brasil)">Direito Ambiental (Brasil)</option>
+
+                <option value="Direito Ambiental (Danos)">Direito Ambiental (Danos)</option>
+
+                <option value="Direito Ambiental (Proteção)">Direito Ambiental (Proteção)</option>
+
+                <option value="Direito Ambiental Brasileiro">Direito Ambiental Brasileiro</option>
+
+                <option value="Direito Civil (Brasil - Documentos legais)">Direito Civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial">Direito Comercial</option>
+
+                <option value="Direito Comercial (Brasil - Documentos legais)">Direito Comercial (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial (Manuais)">Direito Comercial (Manuais)</option>
+
+                <option value="Direito Constitucional (Administração pública)">Direito Constitucional (Administração pública)</option>
+
+                <option value="Direito Constitucional (Brasil)">Direito Constitucional (Brasil)</option>
+
+                <option value="Direito Constitucional (Instruções Normativas)">Direito Constitucional (Instruções Normativas)</option>
+
+                <option value="Direito Constitucional (Português)">Direito Constitucional (Português)</option>
+
+                <option value="Direito Constitucional (Trabalhos finais de curso)">Direito Constitucional (Trabalhos finais de curso)</option>
+
+                <option value="Direito Constitucional - Documentos técnicos">Direito Constitucional - Documentos técnicos</option>
+
+                <option value="Direito Econômico">Direito Econômico</option>
+
+                <option value="Direito Econômico - Fazenda Pública">Direito Econômico - Fazenda Pública</option>
+
+                <option value="Direito Grego">Direito Grego</option>
+
+                <option value="Direito Hebraico">Direito Hebraico</option>
+
+                <option value="Direito Humanos">Direito Humanos</option>
+
+                <option value="Direito Internacional privado (conflitos)">Direito Internacional privado (conflitos)</option>
+
+                <option value="Direito Intertemporal">Direito Intertemporal</option>
+
+                <option value="Direito Jurídico">Direito Jurídico</option>
+
+                <option value="Direito Parlamentar">Direito Parlamentar</option>
+
+                <option value="Direito Penal">Direito Penal</option>
+
+                <option value="Direito Penal - Biotecnologia">Direito Penal - Biotecnologia</option>
+
+                <option value="Direito Penal e Direitos Humanos no Brasil">Direito Penal e Direitos Humanos no Brasil</option>
+
+                <option value="Direito Português">Direito Português</option>
+
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+                <option value="Direito Processual">Direito Processual</option>
+
+                <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+                <option value="Direito Processual Civil (Manuais)">Direito Processual Civil (Manuais)</option>
+
+                <option value="Direito a Justiça - Garantia constitucional">Direito a Justiça - Garantia constitucional</option>
+
+                <option value="Direito a apelação">Direito a apelação</option>
+
+                <option value="Direito a defesa">Direito a defesa</option>
+
+                <option value="Direito administrativo">Direito administrativo</option>
+
+                <option value="Direito administrativo (Especializado)">Direito administrativo (Especializado)</option>
+
+                <option value="Direito agrário">Direito agrário</option>
+
+                <option value="Direito agrário (Brasil)">Direito agrário (Brasil)</option>
+
+                <option value="Direito ambiental (Fatores naturais)">Direito ambiental (Fatores naturais)</option>
+
+                <option value="Direito ambiental (Resumo)">Direito ambiental (Resumo)</option>
+
+                <option value="Direito ambiental (Sociologia dos subsistivos ecológicos)">Direito ambiental (Sociologia dos subsistivos ecológicos)</option>
+
+                <option value="Direito ambiental (Tocantins)">Direito ambiental (Tocantins)</option>
+
+                <option value="Direito ambiental e sociedade">Direito ambiental e sociedade</option>
+
+                <option value="Direito antitruste">Direito antitruste</option>
+
+                <option value="Direito ao bem-estar social">Direito ao bem-estar social</option>
+
+                <option value="Direito ao trabalho">Direito ao trabalho</option>
+
+                <option value="Direito ao voto">Direito ao voto</option>
+
+                <option value="Direito autorais">Direito autorais</option>
+
+                <option value="Direito aéreo militar">Direito aéreo militar</option>
+
+                <option value="Direito brasiliero">Direito brasiliero</option>
+
+                <option value="Direito civil">Direito civil</option>
+
+                <option value="Direito civil (Brasil - Documentos legais)">Direito civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito civil (Brasil)">Direito civil (Brasil)</option>
+
+                <option value="Direito civil (manual jurídico)">Direito civil (manual jurídico)</option>
+
+                <option value="Direito comercial - Brasil">Direito comercial - Brasil</option>
+
+                <option value="Direito comum">Direito comum</option>
+
+                <option value="Direito constitucional">Direito constitucional</option>
+
+                <option value="Direito constitucional (Argentino)">Direito constitucional (Argentino)</option>
+
+                <option value="Direito constitucional (Austríaco)">Direito constitucional (Austríaco)</option>
+
+                <option value="Direito constitucional (Espanhol)">Direito constitucional (Espanhol)</option>
+
+                <option value="Direito constitucional (Holandês)">Direito constitucional (Holandês)</option>
+
+                <option value="Direito constitucional (Inglês)">Direito constitucional (Inglês)</option>
+
+                <option value="Direito constitucional (Italiano)">Direito constitucional (Italiano)</option>
+
+                <option value="Direito constitucional (Mexicano)">Direito constitucional (Mexicano)</option>
+
+                <option value="Direito constitucional (Norte Americano)">Direito constitucional (Norte Americano)</option>
+
+                <option value="Direito constitucional (Suíço)">Direito constitucional (Suíço)</option>
+
+                <option value="Direito constitucional (Teoria geral do processo)">Direito constitucional (Teoria geral do processo)</option>
+
+                <option value="Direito constitucional Alemão">Direito constitucional Alemão</option>
+
+                <option value="Direito constitucional processual">Direito constitucional processual</option>
+
+                <option value="Direito consular">Direito consular</option>
+
+                <option value="Direito consular(tipo)">Direito consular(tipo)</option>
+
+                <option value="Direito contratual">Direito contratual</option>
+
+                <option value="Direito contratual (Brasil)">Direito contratual (Brasil)</option>
+
+                <option value="Direito criminal">Direito criminal</option>
+
+                <option value="Direito criminal (Projeto de lei)">Direito criminal (Projeto de lei)</option>
+
+                <option value="Direito da terra">Direito da terra</option>
+
+                <option value="Direito das coisas">Direito das coisas</option>
+
+                <option value="Direito das obrigações">Direito das obrigações</option>
+
+                <option value="Direito das sociedades">Direito das sociedades</option>
+
+                <option value="Direito das sociedades, firmas, empresas">Direito das sociedades, firmas, empresas</option>
+
+                <option value="Direito de ensinar e aprender">Direito de ensinar e aprender</option>
+
+                <option value="Direito de escolha - Residência - Criança/Adolescente">Direito de escolha - Residência - Criança/Adolescente</option>
+
+                <option value="Direito de família">Direito de família</option>
+
+                <option value="Direito de guerra">Direito de guerra</option>
+
+                <option value="Direito de petição">Direito de petição</option>
+
+                <option value="Direito de propriedade no casamento na ausencia de acordo">Direito de propriedade no casamento na ausencia de acordo</option>
+
+                <option value="Direito de recisão">Direito de recisão</option>
+
+                <option value="Direito diplomático">Direito diplomático</option>
+
+                <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+                <option value="Direito do Consumidor (Documentos legais)">Direito do Consumidor (Documentos legais)</option>
+
+                <option value="Direito do Trabalho (Manuais)">Direito do Trabalho (Manuais)</option>
+
+                <option value="Direito do povo">Direito do povo</option>
+
+                <option value="Direito do trabalho">Direito do trabalho</option>
+
+                <option value="Direito do trabalho (Brasil)">Direito do trabalho (Brasil)</option>
+
+                <option value="Direito do trabalho - Ética moral">Direito do trabalho - Ética moral</option>
+
+                <option value="Direito e Legislação">Direito e Legislação</option>
+
+                <option value="Direito eleitoral">Direito eleitoral</option>
+
+                <option value="Direito eleitoral (Manuais)">Direito eleitoral (Manuais)</option>
+
+                <option value="Direito empresarial">Direito empresarial</option>
+
+                <option value="Direito falimentar">Direito falimentar</option>
+
+                <option value="Direito financeiro">Direito financeiro</option>
+
+                <option value="Direito fundiário">Direito fundiário</option>
+
+                <option value="Direito individual">Direito individual</option>
+
+                <option value="Direito internacional">Direito internacional</option>
+
+                <option value="Direito internacional (Pessoas criminosas)">Direito internacional (Pessoas criminosas)</option>
+
+                <option value="Direito internacional privado">Direito internacional privado</option>
+
+                <option value="Direito internacional público">Direito internacional público</option>
+
+                <option value="Direito lusitano">Direito lusitano</option>
+
+                <option value="Direito militar">Direito militar</option>
+
+                <option value="Direito municipal">Direito municipal</option>
+
+                <option value="Direito nacional">Direito nacional</option>
+
+                <option value="Direito natural">Direito natural</option>
+
+                <option value="Direito parlamentar (Debates)">Direito parlamentar (Debates)</option>
+
+                <option value="Direito penal (Brasil)">Direito penal (Brasil)</option>
+
+                <option value="Direito penal (Teoria)">Direito penal (Teoria)</option>
+
+                <option value="Direito penal de adolescentes">Direito penal de adolescentes</option>
+
+                <option value="Direito penal e Direitos Humanos">Direito penal e Direitos Humanos</option>
+
+                <option value="Direito penal internacional">Direito penal internacional</option>
+
+                <option value="Direito penitenciario (História)">Direito penitenciario (História)</option>
+
+                <option value="Direito penitenciário">Direito penitenciário</option>
+
+                <option value="Direito positivo">Direito positivo</option>
+
+                <option value="Direito processo penal (Brasil - Documentos legais)">Direito processo penal (Brasil - Documentos legais)</option>
+
+                <option value="Direito processual civil (Brasil)">Direito processual civil (Brasil)</option>
+
+                <option value="Direito processual do trabalho">Direito processual do trabalho</option>
+
+                <option value="Dogmática Jurídica">Dogmática Jurídica</option>
+
+                <option value="Doutrina jurídica">Doutrina jurídica</option>
+
+                <option value="Ensino Jurídico">Ensino Jurídico</option>
+
+                <option value="Estado (Personalidade jurídica)">Estado (Personalidade jurídica)</option>
+
+                <option value="Filosofia jurídica">Filosofia jurídica</option>
+
+                <option value="Gnoseologia Jurídica">Gnoseologia Jurídica</option>
+
+                <option value="Igualdade civil e politica">Igualdade civil e politica</option>
+
+                <option value="Internet (Aspectos jurídicos)">Internet (Aspectos jurídicos)</option>
+
+                <option value="Lei Processual">Lei Processual</option>
+
+                <option value="Linguagem Jurídica">Linguagem Jurídica</option>
+
+                <option value="Linguistica Jurídica">Linguistica Jurídica</option>
+
+                <option value="Linguística jurídica (Língua latim)">Linguística jurídica (Língua latim)</option>
+
+                <option value="Meio ambiente(Política nacional)">Meio ambiente(Política nacional)</option>
+
+                <option value="Metodologia jurídica">Metodologia jurídica</option>
+
+                <option value="Monografia jurídica">Monografia jurídica</option>
+
+                <option value="Negócio Jurídico">Negócio Jurídico</option>
+
+                <option value="Norma jurídica - Lei">Norma jurídica - Lei</option>
+
+                <option value="Normas Processuais (Civis)">Normas Processuais (Civis)</option>
+
+                <option value="Nulidade processual">Nulidade processual</option>
+
+                <option value="OAB - Brasil (ensino jurídico)">OAB - Brasil (ensino jurídico)</option>
+
+                <option value="Ontologia jurídica">Ontologia jurídica</option>
+
+                <option value="Ordem Jurídica">Ordem Jurídica</option>
+
+                <option value="Ordenamento jurídico (Projeto de lei)">Ordenamento jurídico (Projeto de lei)</option>
+
+                <option value="Organização Administrativa(política)">Organização Administrativa(política)</option>
+
+                <option value="Pensamento Jurídico">Pensamento Jurídico</option>
+
+                <option value="Personalidade jurídica">Personalidade jurídica</option>
+
+                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+
+                <option value="Pessoa jurídica (Corporações internacionais)">Pessoa jurídica (Corporações internacionais)</option>
+
+                <option value="Política Agrária">Política Agrária</option>
+
+                <option value="Política ambiental">Política ambiental</option>
+
+                <option value="Política criminal">Política criminal</option>
+
+                <option value="Portugues jurídico">Portugues jurídico</option>
+
+                <option value="Positivismo jurídico">Positivismo jurídico</option>
+
+                <option value="Procedimentos especiais(processo civil)">Procedimentos especiais(processo civil)</option>
+
+                <option value="Processo Cautelar">Processo Cautelar</option>
+
+                <option value="Processo Civil (Brasil - Exercícios práticos)">Processo Civil (Brasil - Exercícios práticos)</option>
+
+                <option value="Processo Civil (Prática)">Processo Civil (Prática)</option>
+
+                <option value="Processo Civil (Resumo)">Processo Civil (Resumo)</option>
+
+                <option value="Processo Legal">Processo Legal</option>
+
+                <option value="Processo Legislativo">Processo Legislativo</option>
+
+                <option value="Processo Legislativo (Brasil)">Processo Legislativo (Brasil)</option>
+
+                <option value="Processo Penal">Processo Penal</option>
+
+                <option value="Processo Trabalhista">Processo Trabalhista</option>
+
+                <option value="Processo administrativo">Processo administrativo</option>
+
+                <option value="Processo civil (Alemanha)">Processo civil (Alemanha)</option>
+
+                <option value="Processo civil (Brasil)">Processo civil (Brasil)</option>
+
+                <option value="Processo civil (Itália)">Processo civil (Itália)</option>
+
+                <option value="Processo civil (Manual brasileiro)">Processo civil (Manual brasileiro)</option>
+
+                <option value="Processo civil (Península Ibérica)">Processo civil (Península Ibérica)</option>
+
+                <option value="Processo civil (Prática)">Processo civil (Prática)</option>
+
+                <option value="Processo civil (Reunificação)">Processo civil (Reunificação)</option>
+
+                <option value="Processo civil (Romano)">Processo civil (Romano)</option>
+
+                <option value="Processo de Inventário">Processo de Inventário</option>
+
+                <option value="Processo de divorcio">Processo de divorcio</option>
+
+                <option value="Processo de execução">Processo de execução</option>
+
+                <option value="Processo disciplinar">Processo disciplinar</option>
+
+                <option value="Processo do Trabalho (Autonomia)">Processo do Trabalho (Autonomia)</option>
+
+                <option value="Processo eleitoral">Processo eleitoral</option>
+
+                <option value="Processo eletrônico">Processo eletrônico</option>
+
+                <option value="Processo falimentar">Processo falimentar</option>
+
+                <option value="Processo jurisdição voluntária">Processo jurisdição voluntária</option>
+
+                <option value="Processo ordinário">Processo ordinário</option>
+
+                <option value="Processo previdenciário">Processo previdenciário</option>
+
+                <option value="Processo simplificado">Processo simplificado</option>
+
+                <option value="Processo sumário">Processo sumário</option>
+
+                <option value="Processo trabalho (Alemanha)">Processo trabalho (Alemanha)</option>
+
+                <option value="Processo trabalho (Argentina)">Processo trabalho (Argentina)</option>
+
+                <option value="Processo trabalho (Brasil)">Processo trabalho (Brasil)</option>
+
+                <option value="Processo trabalho (Descrições bibliográficas)">Processo trabalho (Descrições bibliográficas)</option>
+
+                <option value="Processo trabalho (Espanha)">Processo trabalho (Espanha)</option>
+
+                <option value="Processo trabalho (Estados Unidos)">Processo trabalho (Estados Unidos)</option>
+
+                <option value="Processo trabalho (França)">Processo trabalho (França)</option>
+
+                <option value="Processo trabalho (Grã-Bretanha)">Processo trabalho (Grã-Bretanha)</option>
+
+                <option value="Processo trabalho (Itália)">Processo trabalho (Itália)</option>
+
+                <option value="Processo trabalho (México)">Processo trabalho (México)</option>
+
+                <option value="Processo trabalho (Portugal)">Processo trabalho (Portugal)</option>
+
+                <option value="Processo trabalho (Resumo)">Processo trabalho (Resumo)</option>
+
+                <option value="Processo urgente">Processo urgente</option>
+
+                <option value="Processos Criminais">Processos Criminais</option>
+
+                <option value="Processos criminais (Prática de campo)">Processos criminais (Prática de campo)</option>
+
+                <option value="Processos incidentes">Processos incidentes</option>
+
+                <option value="Processos latentes">Processos latentes</option>
+
+                <option value="Processos parlamentares">Processos parlamentares</option>
+
+                <option value="Processos sociais">Processos sociais</option>
+
+                <option value="Processos sociais - Dinâmica social">Processos sociais - Dinâmica social</option>
+
+                <option value="Processual (técnica)">Processual (técnica)</option>
+
+                <option value="Prática Processual Civil">Prática Processual Civil</option>
+
+                <option value="Psicologia jurídica">Psicologia jurídica</option>
+
+                <option value="Recursos processuais">Recursos processuais</option>
+
+                <option value="Regime Jurídico">Regime Jurídico</option>
+
+                <option value="Remédios jurídicos">Remédios jurídicos</option>
+
+                <option value="Responsabilidade Jurídica">Responsabilidade Jurídica</option>
+
+                <option value="Sistema Processual">Sistema Processual</option>
+
+                <option value="Sistema jurídico">Sistema jurídico</option>
+
+                <option value="Sistema jurídico brasileiro">Sistema jurídico brasileiro</option>
+
+                <option value="Sociologia Jurídica">Sociologia Jurídica</option>
+
+                <option value="Sociologismo Jurídico">Sociologismo Jurídico</option>
+
+                <option value="Suspensão condicional - Processo">Suspensão condicional - Processo</option>
+
+                <option value="Teoria geral do processo (Brasil)">Teoria geral do processo (Brasil)</option>
+
+                <option value="Tribunal(Processo)">Tribunal(Processo)</option>
+
+                <option value="Tutela(processo civil)">Tutela(processo civil)</option>
+
+                <option value="Ética jurídica">Ética jurídica</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_assunto2">Assunto 2</label>
+              <select name="assunto2" id="id_assunto2" class="form-control" title="">
+                <option value="" selected>---------</option>
+
+                <option value=" Direito constitucional Francês"> Direito constitucional Francês</option>
+
+                <option value="Antropologia jurídica">Antropologia jurídica</option>
+
+                <option value="Antropologia política">Antropologia política</option>
+
+                <option value="Argumentação jurídica">Argumentação jurídica</option>
+
+                <option value="Arrendatário (Direitos)">Arrendatário (Direitos)</option>
+
+                <option value="Arte do Direito">Arte do Direito</option>
+
+                <option value="Assistência jurídica">Assistência jurídica</option>
+
+                <option value="Assistência jurídica gratuíta">Assistência jurídica gratuíta</option>
+
+                <option value="Ato Processual">Ato Processual</option>
+
+                <option value="Ações processórias">Ações processórias</option>
+
+                <option value="Ciência jurídica">Ciência jurídica</option>
+
+                <option value="Ciências Jurídicas">Ciências Jurídicas</option>
+
+                <option value="Codigo Processual Civil (Projeto de lei)">Codigo Processual Civil (Projeto de lei)</option>
+
+                <option value="Comunicação Jurídica">Comunicação Jurídica</option>
+
+                <option value="Consumidor (Política governamental)">Consumidor (Política governamental)</option>
+
+                <option value="Cultura Jurídica">Cultura Jurídica</option>
+
+                <option value="Dano ambiental (Direito)">Dano ambiental (Direito)</option>
+
+                <option value="Democracia - Direito público">Democracia - Direito público</option>
+
+                <option value="Direiro penal (Brasil)">Direiro penal (Brasil)</option>
+
+                <option value="Direito">Direito</option>
+
+                <option value="Direito (Alemanha)">Direito (Alemanha)</option>
+
+                <option value="Direito (Brasil)">Direito (Brasil)</option>
+
+                <option value="Direito (Estrutura histórica)">Direito (Estrutura histórica)</option>
+
+                <option value="Direito (Grecia)">Direito (Grecia)</option>
+
+                <option value="Direito (História)">Direito (História)</option>
+
+                <option value="Direito (Idade media)">Direito (Idade media)</option>
+
+                <option value="Direito (Leis de proteção da infância)">Direito (Leis de proteção da infância)</option>
+
+                <option value="Direito (Missões Jesuíticas)">Direito (Missões Jesuíticas)</option>
+
+                <option value="Direito (Moderno)">Direito (Moderno)</option>
+
+                <option value="Direito (Mundo Ocidental)">Direito (Mundo Ocidental)</option>
+
+                <option value="Direito (Regime militar)">Direito (Regime militar)</option>
+
+                <option value="Direito (Sistema administrativo)">Direito (Sistema administrativo)</option>
+
+                <option value="Direito (Trabalhos finais de curso)">Direito (Trabalhos finais de curso)</option>
+
+                <option value="Direito - Educação (Criança)">Direito - Educação (Criança)</option>
+
+                <option value="Direito - Juizados especiais (Brasil)">Direito - Juizados especiais (Brasil)</option>
+
+                <option value="Direito - dicionário - língua portuguesa - Brasil">Direito - dicionário - língua portuguesa - Brasil</option>
+
+                <option value="Direito Administrativo e Direito tributário">Direito Administrativo e Direito tributário</option>
+
+                <option value="Direito Administrativo especializado">Direito Administrativo especializado</option>
+
+                <option value="Direito Administrativo geral">Direito Administrativo geral</option>
+
+                <option value="Direito Ambiental">Direito Ambiental</option>
+
+                <option value="Direito Ambiental (Brasil)">Direito Ambiental (Brasil)</option>
+
+                <option value="Direito Ambiental (Danos)">Direito Ambiental (Danos)</option>
+
+                <option value="Direito Ambiental (Proteção)">Direito Ambiental (Proteção)</option>
+
+                <option value="Direito Ambiental Brasileiro">Direito Ambiental Brasileiro</option>
+
+                <option value="Direito Civil (Brasil - Documentos legais)">Direito Civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial">Direito Comercial</option>
+
+                <option value="Direito Comercial (Brasil - Documentos legais)">Direito Comercial (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial (Manuais)">Direito Comercial (Manuais)</option>
+
+                <option value="Direito Constitucional (Administração pública)">Direito Constitucional (Administração pública)</option>
+
+                <option value="Direito Constitucional (Brasil)">Direito Constitucional (Brasil)</option>
+
+                <option value="Direito Constitucional (Instruções Normativas)">Direito Constitucional (Instruções Normativas)</option>
+
+                <option value="Direito Constitucional (Português)">Direito Constitucional (Português)</option>
+
+                <option value="Direito Constitucional (Trabalhos finais de curso)">Direito Constitucional (Trabalhos finais de curso)</option>
+
+                <option value="Direito Constitucional - Documentos técnicos">Direito Constitucional - Documentos técnicos</option>
+
+                <option value="Direito Econômico">Direito Econômico</option>
+
+                <option value="Direito Econômico - Fazenda Pública">Direito Econômico - Fazenda Pública</option>
+
+                <option value="Direito Grego">Direito Grego</option>
+
+                <option value="Direito Hebraico">Direito Hebraico</option>
+
+                <option value="Direito Humanos">Direito Humanos</option>
+
+                <option value="Direito Internacional privado (conflitos)">Direito Internacional privado (conflitos)</option>
+
+                <option value="Direito Intertemporal">Direito Intertemporal</option>
+
+                <option value="Direito Jurídico">Direito Jurídico</option>
+
+                <option value="Direito Parlamentar">Direito Parlamentar</option>
+
+                <option value="Direito Penal">Direito Penal</option>
+
+                <option value="Direito Penal - Biotecnologia">Direito Penal - Biotecnologia</option>
+
+                <option value="Direito Penal e Direitos Humanos no Brasil">Direito Penal e Direitos Humanos no Brasil</option>
+
+                <option value="Direito Português">Direito Português</option>
+
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+                <option value="Direito Processual">Direito Processual</option>
+
+                <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+                <option value="Direito Processual Civil (Manuais)">Direito Processual Civil (Manuais)</option>
+
+                <option value="Direito a Justiça - Garantia constitucional">Direito a Justiça - Garantia constitucional</option>
+
+                <option value="Direito a apelação">Direito a apelação</option>
+
+                <option value="Direito a defesa">Direito a defesa</option>
+
+                <option value="Direito administrativo">Direito administrativo</option>
+
+                <option value="Direito administrativo (Especializado)">Direito administrativo (Especializado)</option>
+
+                <option value="Direito agrário">Direito agrário</option>
+
+                <option value="Direito agrário (Brasil)">Direito agrário (Brasil)</option>
+
+                <option value="Direito ambiental (Fatores naturais)">Direito ambiental (Fatores naturais)</option>
+
+                <option value="Direito ambiental (Resumo)">Direito ambiental (Resumo)</option>
+
+                <option value="Direito ambiental (Sociologia dos subsistivos ecológicos)">Direito ambiental (Sociologia dos subsistivos ecológicos)</option>
+
+                <option value="Direito ambiental (Tocantins)">Direito ambiental (Tocantins)</option>
+
+                <option value="Direito ambiental e sociedade">Direito ambiental e sociedade</option>
+
+                <option value="Direito antitruste">Direito antitruste</option>
+
+                <option value="Direito ao bem-estar social">Direito ao bem-estar social</option>
+
+                <option value="Direito ao trabalho">Direito ao trabalho</option>
+
+                <option value="Direito ao voto">Direito ao voto</option>
+
+                <option value="Direito autorais">Direito autorais</option>
+
+                <option value="Direito aéreo militar">Direito aéreo militar</option>
+
+                <option value="Direito brasiliero">Direito brasiliero</option>
+
+                <option value="Direito civil">Direito civil</option>
+
+                <option value="Direito civil (Brasil - Documentos legais)">Direito civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito civil (Brasil)">Direito civil (Brasil)</option>
+
+                <option value="Direito civil (manual jurídico)">Direito civil (manual jurídico)</option>
+
+                <option value="Direito comercial - Brasil">Direito comercial - Brasil</option>
+
+                <option value="Direito comum">Direito comum</option>
+
+                <option value="Direito constitucional">Direito constitucional</option>
+
+                <option value="Direito constitucional (Argentino)">Direito constitucional (Argentino)</option>
+
+                <option value="Direito constitucional (Austríaco)">Direito constitucional (Austríaco)</option>
+
+                <option value="Direito constitucional (Espanhol)">Direito constitucional (Espanhol)</option>
+
+                <option value="Direito constitucional (Holandês)">Direito constitucional (Holandês)</option>
+
+                <option value="Direito constitucional (Inglês)">Direito constitucional (Inglês)</option>
+
+                <option value="Direito constitucional (Italiano)">Direito constitucional (Italiano)</option>
+
+                <option value="Direito constitucional (Mexicano)">Direito constitucional (Mexicano)</option>
+
+                <option value="Direito constitucional (Norte Americano)">Direito constitucional (Norte Americano)</option>
+
+                <option value="Direito constitucional (Suíço)">Direito constitucional (Suíço)</option>
+
+                <option value="Direito constitucional (Teoria geral do processo)">Direito constitucional (Teoria geral do processo)</option>
+
+                <option value="Direito constitucional Alemão">Direito constitucional Alemão</option>
+
+                <option value="Direito constitucional processual">Direito constitucional processual</option>
+
+                <option value="Direito consular">Direito consular</option>
+
+                <option value="Direito consular(tipo)">Direito consular(tipo)</option>
+
+                <option value="Direito contratual">Direito contratual</option>
+
+                <option value="Direito contratual (Brasil)">Direito contratual (Brasil)</option>
+
+                <option value="Direito criminal">Direito criminal</option>
+
+                <option value="Direito criminal (Projeto de lei)">Direito criminal (Projeto de lei)</option>
+
+                <option value="Direito da terra">Direito da terra</option>
+
+                <option value="Direito das coisas">Direito das coisas</option>
+
+                <option value="Direito das obrigações">Direito das obrigações</option>
+
+                <option value="Direito das sociedades">Direito das sociedades</option>
+
+                <option value="Direito das sociedades, firmas, empresas">Direito das sociedades, firmas, empresas</option>
+
+                <option value="Direito de ensinar e aprender">Direito de ensinar e aprender</option>
+
+                <option value="Direito de escolha - Residência - Criança/Adolescente">Direito de escolha - Residência - Criança/Adolescente</option>
+
+                <option value="Direito de família">Direito de família</option>
+
+                <option value="Direito de guerra">Direito de guerra</option>
+
+                <option value="Direito de petição">Direito de petição</option>
+
+                <option value="Direito de propriedade no casamento na ausencia de acordo">Direito de propriedade no casamento na ausencia de acordo</option>
+
+                <option value="Direito de recisão">Direito de recisão</option>
+
+                <option value="Direito diplomático">Direito diplomático</option>
+
+                <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+                <option value="Direito do Consumidor (Documentos legais)">Direito do Consumidor (Documentos legais)</option>
+
+                <option value="Direito do Trabalho (Manuais)">Direito do Trabalho (Manuais)</option>
+
+                <option value="Direito do povo">Direito do povo</option>
+
+                <option value="Direito do trabalho">Direito do trabalho</option>
+
+                <option value="Direito do trabalho (Brasil)">Direito do trabalho (Brasil)</option>
+
+                <option value="Direito do trabalho - Ética moral">Direito do trabalho - Ética moral</option>
+
+                <option value="Direito e Legislação">Direito e Legislação</option>
+
+                <option value="Direito eleitoral">Direito eleitoral</option>
+
+                <option value="Direito eleitoral (Manuais)">Direito eleitoral (Manuais)</option>
+
+                <option value="Direito empresarial">Direito empresarial</option>
+
+                <option value="Direito falimentar">Direito falimentar</option>
+
+                <option value="Direito financeiro">Direito financeiro</option>
+
+                <option value="Direito fundiário">Direito fundiário</option>
+
+                <option value="Direito individual">Direito individual</option>
+
+                <option value="Direito internacional">Direito internacional</option>
+
+                <option value="Direito internacional (Pessoas criminosas)">Direito internacional (Pessoas criminosas)</option>
+
+                <option value="Direito internacional privado">Direito internacional privado</option>
+
+                <option value="Direito internacional público">Direito internacional público</option>
+
+                <option value="Direito lusitano">Direito lusitano</option>
+
+                <option value="Direito militar">Direito militar</option>
+
+                <option value="Direito municipal">Direito municipal</option>
+
+                <option value="Direito nacional">Direito nacional</option>
+
+                <option value="Direito natural">Direito natural</option>
+
+                <option value="Direito parlamentar (Debates)">Direito parlamentar (Debates)</option>
+
+                <option value="Direito penal (Brasil)">Direito penal (Brasil)</option>
+
+                <option value="Direito penal (Teoria)">Direito penal (Teoria)</option>
+
+                <option value="Direito penal de adolescentes">Direito penal de adolescentes</option>
+
+                <option value="Direito penal e Direitos Humanos">Direito penal e Direitos Humanos</option>
+
+                <option value="Direito penal internacional">Direito penal internacional</option>
+
+                <option value="Direito penitenciario (História)">Direito penitenciario (História)</option>
+
+                <option value="Direito penitenciário">Direito penitenciário</option>
+
+                <option value="Direito positivo">Direito positivo</option>
+
+                <option value="Direito processo penal (Brasil - Documentos legais)">Direito processo penal (Brasil - Documentos legais)</option>
+
+                <option value="Direito processual civil (Brasil)">Direito processual civil (Brasil)</option>
+
+                <option value="Direito processual do trabalho">Direito processual do trabalho</option>
+
+                <option value="Dogmática Jurídica">Dogmática Jurídica</option>
+
+                <option value="Doutrina jurídica">Doutrina jurídica</option>
+
+                <option value="Ensino Jurídico">Ensino Jurídico</option>
+
+                <option value="Estado (Personalidade jurídica)">Estado (Personalidade jurídica)</option>
+
+                <option value="Filosofia jurídica">Filosofia jurídica</option>
+
+                <option value="Gnoseologia Jurídica">Gnoseologia Jurídica</option>
+
+                <option value="Igualdade civil e politica">Igualdade civil e politica</option>
+
+                <option value="Internet (Aspectos jurídicos)">Internet (Aspectos jurídicos)</option>
+
+                <option value="Lei Processual">Lei Processual</option>
+
+                <option value="Linguagem Jurídica">Linguagem Jurídica</option>
+
+                <option value="Linguistica Jurídica">Linguistica Jurídica</option>
+
+                <option value="Linguística jurídica (Língua latim)">Linguística jurídica (Língua latim)</option>
+
+                <option value="Meio ambiente(Política nacional)">Meio ambiente(Política nacional)</option>
+
+                <option value="Metodologia jurídica">Metodologia jurídica</option>
+
+                <option value="Monografia jurídica">Monografia jurídica</option>
+
+                <option value="Negócio Jurídico">Negócio Jurídico</option>
+
+                <option value="Norma jurídica - Lei">Norma jurídica - Lei</option>
+
+                <option value="Normas Processuais (Civis)">Normas Processuais (Civis)</option>
+
+                <option value="Nulidade processual">Nulidade processual</option>
+
+                <option value="OAB - Brasil (ensino jurídico)">OAB - Brasil (ensino jurídico)</option>
+
+                <option value="Ontologia jurídica">Ontologia jurídica</option>
+
+                <option value="Ordem Jurídica">Ordem Jurídica</option>
+
+                <option value="Ordenamento jurídico (Projeto de lei)">Ordenamento jurídico (Projeto de lei)</option>
+
+                <option value="Organização Administrativa(política)">Organização Administrativa(política)</option>
+
+                <option value="Pensamento Jurídico">Pensamento Jurídico</option>
+
+                <option value="Personalidade jurídica">Personalidade jurídica</option>
+
+                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+
+                <option value="Pessoa jurídica (Corporações internacionais)">Pessoa jurídica (Corporações internacionais)</option>
+
+                <option value="Política Agrária">Política Agrária</option>
+
+                <option value="Política ambiental">Política ambiental</option>
+
+                <option value="Política criminal">Política criminal</option>
+
+                <option value="Portugues jurídico">Portugues jurídico</option>
+
+                <option value="Positivismo jurídico">Positivismo jurídico</option>
+
+                <option value="Procedimentos especiais(processo civil)">Procedimentos especiais(processo civil)</option>
+
+                <option value="Processo Cautelar">Processo Cautelar</option>
+
+                <option value="Processo Civil (Brasil - Exercícios práticos)">Processo Civil (Brasil - Exercícios práticos)</option>
+
+                <option value="Processo Civil (Prática)">Processo Civil (Prática)</option>
+
+                <option value="Processo Civil (Resumo)">Processo Civil (Resumo)</option>
+
+                <option value="Processo Legal">Processo Legal</option>
+
+                <option value="Processo Legislativo">Processo Legislativo</option>
+
+                <option value="Processo Legislativo (Brasil)">Processo Legislativo (Brasil)</option>
+
+                <option value="Processo Penal">Processo Penal</option>
+
+                <option value="Processo Trabalhista">Processo Trabalhista</option>
+
+                <option value="Processo administrativo">Processo administrativo</option>
+
+                <option value="Processo civil (Alemanha)">Processo civil (Alemanha)</option>
+
+                <option value="Processo civil (Brasil)">Processo civil (Brasil)</option>
+
+                <option value="Processo civil (Itália)">Processo civil (Itália)</option>
+
+                <option value="Processo civil (Manual brasileiro)">Processo civil (Manual brasileiro)</option>
+
+                <option value="Processo civil (Península Ibérica)">Processo civil (Península Ibérica)</option>
+
+                <option value="Processo civil (Prática)">Processo civil (Prática)</option>
+
+                <option value="Processo civil (Reunificação)">Processo civil (Reunificação)</option>
+
+                <option value="Processo civil (Romano)">Processo civil (Romano)</option>
+
+                <option value="Processo de Inventário">Processo de Inventário</option>
+
+                <option value="Processo de divorcio">Processo de divorcio</option>
+
+                <option value="Processo de execução">Processo de execução</option>
+
+                <option value="Processo disciplinar">Processo disciplinar</option>
+
+                <option value="Processo do Trabalho (Autonomia)">Processo do Trabalho (Autonomia)</option>
+
+                <option value="Processo eleitoral">Processo eleitoral</option>
+
+                <option value="Processo eletrônico">Processo eletrônico</option>
+
+                <option value="Processo falimentar">Processo falimentar</option>
+
+                <option value="Processo jurisdição voluntária">Processo jurisdição voluntária</option>
+
+                <option value="Processo ordinário">Processo ordinário</option>
+
+                <option value="Processo previdenciário">Processo previdenciário</option>
+
+                <option value="Processo simplificado">Processo simplificado</option>
+
+                <option value="Processo sumário">Processo sumário</option>
+
+                <option value="Processo trabalho (Alemanha)">Processo trabalho (Alemanha)</option>
+
+                <option value="Processo trabalho (Argentina)">Processo trabalho (Argentina)</option>
+
+                <option value="Processo trabalho (Brasil)">Processo trabalho (Brasil)</option>
+
+                <option value="Processo trabalho (Descrições bibliográficas)">Processo trabalho (Descrições bibliográficas)</option>
+
+                <option value="Processo trabalho (Espanha)">Processo trabalho (Espanha)</option>
+
+                <option value="Processo trabalho (Estados Unidos)">Processo trabalho (Estados Unidos)</option>
+
+                <option value="Processo trabalho (França)">Processo trabalho (França)</option>
+
+                <option value="Processo trabalho (Grã-Bretanha)">Processo trabalho (Grã-Bretanha)</option>
+
+                <option value="Processo trabalho (Itália)">Processo trabalho (Itália)</option>
+
+                <option value="Processo trabalho (México)">Processo trabalho (México)</option>
+
+                <option value="Processo trabalho (Portugal)">Processo trabalho (Portugal)</option>
+
+                <option value="Processo trabalho (Resumo)">Processo trabalho (Resumo)</option>
+
+                <option value="Processo urgente">Processo urgente</option>
+
+                <option value="Processos Criminais">Processos Criminais</option>
+
+                <option value="Processos criminais (Prática de campo)">Processos criminais (Prática de campo)</option>
+
+                <option value="Processos incidentes">Processos incidentes</option>
+
+                <option value="Processos latentes">Processos latentes</option>
+
+                <option value="Processos parlamentares">Processos parlamentares</option>
+
+                <option value="Processos sociais">Processos sociais</option>
+
+                <option value="Processos sociais - Dinâmica social">Processos sociais - Dinâmica social</option>
+
+                <option value="Processual (técnica)">Processual (técnica)</option>
+
+                <option value="Prática Processual Civil">Prática Processual Civil</option>
+
+                <option value="Psicologia jurídica">Psicologia jurídica</option>
+
+                <option value="Recursos processuais">Recursos processuais</option>
+
+                <option value="Regime Jurídico">Regime Jurídico</option>
+
+                <option value="Remédios jurídicos">Remédios jurídicos</option>
+
+                <option value="Responsabilidade Jurídica">Responsabilidade Jurídica</option>
+
+                <option value="Sistema Processual">Sistema Processual</option>
+
+                <option value="Sistema jurídico">Sistema jurídico</option>
+
+                <option value="Sistema jurídico brasileiro">Sistema jurídico brasileiro</option>
+
+                <option value="Sociologia Jurídica">Sociologia Jurídica</option>
+
+                <option value="Sociologismo Jurídico">Sociologismo Jurídico</option>
+
+                <option value="Suspensão condicional - Processo">Suspensão condicional - Processo</option>
+
+                <option value="Teoria geral do processo (Brasil)">Teoria geral do processo (Brasil)</option>
+
+                <option value="Tribunal(Processo)">Tribunal(Processo)</option>
+
+                <option value="Tutela(processo civil)">Tutela(processo civil)</option>
+
+                <option value="Ética jurídica">Ética jurídica</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_assunto3">Assunto 3</label>
+              <select name="assunto3" id="id_assunto3" class="form-control" title="">
+                <option value="" selected>---------</option>
+
+                <option value=" Direito constitucional Francês"> Direito constitucional Francês</option>
+
+                <option value="Antropologia jurídica">Antropologia jurídica</option>
+
+                <option value="Antropologia política">Antropologia política</option>
+
+                <option value="Argumentação jurídica">Argumentação jurídica</option>
+
+                <option value="Arrendatário (Direitos)">Arrendatário (Direitos)</option>
+
+                <option value="Arte do Direito">Arte do Direito</option>
+
+                <option value="Assistência jurídica">Assistência jurídica</option>
+
+                <option value="Assistência jurídica gratuíta">Assistência jurídica gratuíta</option>
+
+                <option value="Ato Processual">Ato Processual</option>
+
+                <option value="Ações processórias">Ações processórias</option>
+
+                <option value="Ciência jurídica">Ciência jurídica</option>
+
+                <option value="Ciências Jurídicas">Ciências Jurídicas</option>
+
+                <option value="Codigo Processual Civil (Projeto de lei)">Codigo Processual Civil (Projeto de lei)</option>
+
+                <option value="Comunicação Jurídica">Comunicação Jurídica</option>
+
+                <option value="Consumidor (Política governamental)">Consumidor (Política governamental)</option>
+
+                <option value="Cultura Jurídica">Cultura Jurídica</option>
+
+                <option value="Dano ambiental (Direito)">Dano ambiental (Direito)</option>
+
+                <option value="Democracia - Direito público">Democracia - Direito público</option>
+
+                <option value="Direiro penal (Brasil)">Direiro penal (Brasil)</option>
+
+                <option value="Direito">Direito</option>
+
+                <option value="Direito (Alemanha)">Direito (Alemanha)</option>
+
+                <option value="Direito (Brasil)">Direito (Brasil)</option>
+
+                <option value="Direito (Estrutura histórica)">Direito (Estrutura histórica)</option>
+
+                <option value="Direito (Grecia)">Direito (Grecia)</option>
+
+                <option value="Direito (História)">Direito (História)</option>
+
+                <option value="Direito (Idade media)">Direito (Idade media)</option>
+
+                <option value="Direito (Leis de proteção da infância)">Direito (Leis de proteção da infância)</option>
+
+                <option value="Direito (Missões Jesuíticas)">Direito (Missões Jesuíticas)</option>
+
+                <option value="Direito (Moderno)">Direito (Moderno)</option>
+
+                <option value="Direito (Mundo Ocidental)">Direito (Mundo Ocidental)</option>
+
+                <option value="Direito (Regime militar)">Direito (Regime militar)</option>
+
+                <option value="Direito (Sistema administrativo)">Direito (Sistema administrativo)</option>
+
+                <option value="Direito (Trabalhos finais de curso)">Direito (Trabalhos finais de curso)</option>
+
+                <option value="Direito - Educação (Criança)">Direito - Educação (Criança)</option>
+
+                <option value="Direito - Juizados especiais (Brasil)">Direito - Juizados especiais (Brasil)</option>
+
+                <option value="Direito - dicionário - língua portuguesa - Brasil">Direito - dicionário - língua portuguesa - Brasil</option>
+
+                <option value="Direito Administrativo e Direito tributário">Direito Administrativo e Direito tributário</option>
+
+                <option value="Direito Administrativo especializado">Direito Administrativo especializado</option>
+
+                <option value="Direito Administrativo geral">Direito Administrativo geral</option>
+
+                <option value="Direito Ambiental">Direito Ambiental</option>
+
+                <option value="Direito Ambiental (Brasil)">Direito Ambiental (Brasil)</option>
+
+                <option value="Direito Ambiental (Danos)">Direito Ambiental (Danos)</option>
+
+                <option value="Direito Ambiental (Proteção)">Direito Ambiental (Proteção)</option>
+
+                <option value="Direito Ambiental Brasileiro">Direito Ambiental Brasileiro</option>
+
+                <option value="Direito Civil (Brasil - Documentos legais)">Direito Civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial">Direito Comercial</option>
+
+                <option value="Direito Comercial (Brasil - Documentos legais)">Direito Comercial (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial (Manuais)">Direito Comercial (Manuais)</option>
+
+                <option value="Direito Constitucional (Administração pública)">Direito Constitucional (Administração pública)</option>
+
+                <option value="Direito Constitucional (Brasil)">Direito Constitucional (Brasil)</option>
+
+                <option value="Direito Constitucional (Instruções Normativas)">Direito Constitucional (Instruções Normativas)</option>
+
+                <option value="Direito Constitucional (Português)">Direito Constitucional (Português)</option>
+
+                <option value="Direito Constitucional (Trabalhos finais de curso)">Direito Constitucional (Trabalhos finais de curso)</option>
+
+                <option value="Direito Constitucional - Documentos técnicos">Direito Constitucional - Documentos técnicos</option>
+
+                <option value="Direito Econômico">Direito Econômico</option>
+
+                <option value="Direito Econômico - Fazenda Pública">Direito Econômico - Fazenda Pública</option>
+
+                <option value="Direito Grego">Direito Grego</option>
+
+                <option value="Direito Hebraico">Direito Hebraico</option>
+
+                <option value="Direito Humanos">Direito Humanos</option>
+
+                <option value="Direito Internacional privado (conflitos)">Direito Internacional privado (conflitos)</option>
+
+                <option value="Direito Intertemporal">Direito Intertemporal</option>
+
+                <option value="Direito Jurídico">Direito Jurídico</option>
+
+                <option value="Direito Parlamentar">Direito Parlamentar</option>
+
+                <option value="Direito Penal">Direito Penal</option>
+
+                <option value="Direito Penal - Biotecnologia">Direito Penal - Biotecnologia</option>
+
+                <option value="Direito Penal e Direitos Humanos no Brasil">Direito Penal e Direitos Humanos no Brasil</option>
+
+                <option value="Direito Português">Direito Português</option>
+
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+                <option value="Direito Processual">Direito Processual</option>
+
+                <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+                <option value="Direito Processual Civil (Manuais)">Direito Processual Civil (Manuais)</option>
+
+                <option value="Direito a Justiça - Garantia constitucional">Direito a Justiça - Garantia constitucional</option>
+
+                <option value="Direito a apelação">Direito a apelação</option>
+
+                <option value="Direito a defesa">Direito a defesa</option>
+
+                <option value="Direito administrativo">Direito administrativo</option>
+
+                <option value="Direito administrativo (Especializado)">Direito administrativo (Especializado)</option>
+
+                <option value="Direito agrário">Direito agrário</option>
+
+                <option value="Direito agrário (Brasil)">Direito agrário (Brasil)</option>
+
+                <option value="Direito ambiental (Fatores naturais)">Direito ambiental (Fatores naturais)</option>
+
+                <option value="Direito ambiental (Resumo)">Direito ambiental (Resumo)</option>
+
+                <option value="Direito ambiental (Sociologia dos subsistivos ecológicos)">Direito ambiental (Sociologia dos subsistivos ecológicos)</option>
+
+                <option value="Direito ambiental (Tocantins)">Direito ambiental (Tocantins)</option>
+
+                <option value="Direito ambiental e sociedade">Direito ambiental e sociedade</option>
+
+                <option value="Direito antitruste">Direito antitruste</option>
+
+                <option value="Direito ao bem-estar social">Direito ao bem-estar social</option>
+
+                <option value="Direito ao trabalho">Direito ao trabalho</option>
+
+                <option value="Direito ao voto">Direito ao voto</option>
+
+                <option value="Direito autorais">Direito autorais</option>
+
+                <option value="Direito aéreo militar">Direito aéreo militar</option>
+
+                <option value="Direito brasiliero">Direito brasiliero</option>
+
+                <option value="Direito civil">Direito civil</option>
+
+                <option value="Direito civil (Brasil - Documentos legais)">Direito civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito civil (Brasil)">Direito civil (Brasil)</option>
+
+                <option value="Direito civil (manual jurídico)">Direito civil (manual jurídico)</option>
+
+                <option value="Direito comercial - Brasil">Direito comercial - Brasil</option>
+
+                <option value="Direito comum">Direito comum</option>
+
+                <option value="Direito constitucional">Direito constitucional</option>
+
+                <option value="Direito constitucional (Argentino)">Direito constitucional (Argentino)</option>
+
+                <option value="Direito constitucional (Austríaco)">Direito constitucional (Austríaco)</option>
+
+                <option value="Direito constitucional (Espanhol)">Direito constitucional (Espanhol)</option>
+
+                <option value="Direito constitucional (Holandês)">Direito constitucional (Holandês)</option>
+
+                <option value="Direito constitucional (Inglês)">Direito constitucional (Inglês)</option>
+
+                <option value="Direito constitucional (Italiano)">Direito constitucional (Italiano)</option>
+
+                <option value="Direito constitucional (Mexicano)">Direito constitucional (Mexicano)</option>
+
+                <option value="Direito constitucional (Norte Americano)">Direito constitucional (Norte Americano)</option>
+
+                <option value="Direito constitucional (Suíço)">Direito constitucional (Suíço)</option>
+
+                <option value="Direito constitucional (Teoria geral do processo)">Direito constitucional (Teoria geral do processo)</option>
+
+                <option value="Direito constitucional Alemão">Direito constitucional Alemão</option>
+
+                <option value="Direito constitucional processual">Direito constitucional processual</option>
+
+                <option value="Direito consular">Direito consular</option>
+
+                <option value="Direito consular(tipo)">Direito consular(tipo)</option>
+
+                <option value="Direito contratual">Direito contratual</option>
+
+                <option value="Direito contratual (Brasil)">Direito contratual (Brasil)</option>
+
+                <option value="Direito criminal">Direito criminal</option>
+
+                <option value="Direito criminal (Projeto de lei)">Direito criminal (Projeto de lei)</option>
+
+                <option value="Direito da terra">Direito da terra</option>
+
+                <option value="Direito das coisas">Direito das coisas</option>
+
+                <option value="Direito das obrigações">Direito das obrigações</option>
+
+                <option value="Direito das sociedades">Direito das sociedades</option>
+
+                <option value="Direito das sociedades, firmas, empresas">Direito das sociedades, firmas, empresas</option>
+
+                <option value="Direito de ensinar e aprender">Direito de ensinar e aprender</option>
+
+                <option value="Direito de escolha - Residência - Criança/Adolescente">Direito de escolha - Residência - Criança/Adolescente</option>
+
+                <option value="Direito de família">Direito de família</option>
+
+                <option value="Direito de guerra">Direito de guerra</option>
+
+                <option value="Direito de petição">Direito de petição</option>
+
+                <option value="Direito de propriedade no casamento na ausencia de acordo">Direito de propriedade no casamento na ausencia de acordo</option>
+
+                <option value="Direito de recisão">Direito de recisão</option>
+
+                <option value="Direito diplomático">Direito diplomático</option>
+
+                <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+                <option value="Direito do Consumidor (Documentos legais)">Direito do Consumidor (Documentos legais)</option>
+
+                <option value="Direito do Trabalho (Manuais)">Direito do Trabalho (Manuais)</option>
+
+                <option value="Direito do povo">Direito do povo</option>
+
+                <option value="Direito do trabalho">Direito do trabalho</option>
+
+                <option value="Direito do trabalho (Brasil)">Direito do trabalho (Brasil)</option>
+
+                <option value="Direito do trabalho - Ética moral">Direito do trabalho - Ética moral</option>
+
+                <option value="Direito e Legislação">Direito e Legislação</option>
+
+                <option value="Direito eleitoral">Direito eleitoral</option>
+
+                <option value="Direito eleitoral (Manuais)">Direito eleitoral (Manuais)</option>
+
+                <option value="Direito empresarial">Direito empresarial</option>
+
+                <option value="Direito falimentar">Direito falimentar</option>
+
+                <option value="Direito financeiro">Direito financeiro</option>
+
+                <option value="Direito fundiário">Direito fundiário</option>
+
+                <option value="Direito individual">Direito individual</option>
+
+                <option value="Direito internacional">Direito internacional</option>
+
+                <option value="Direito internacional (Pessoas criminosas)">Direito internacional (Pessoas criminosas)</option>
+
+                <option value="Direito internacional privado">Direito internacional privado</option>
+
+                <option value="Direito internacional público">Direito internacional público</option>
+
+                <option value="Direito lusitano">Direito lusitano</option>
+
+                <option value="Direito militar">Direito militar</option>
+
+                <option value="Direito municipal">Direito municipal</option>
+
+                <option value="Direito nacional">Direito nacional</option>
+
+                <option value="Direito natural">Direito natural</option>
+
+                <option value="Direito parlamentar (Debates)">Direito parlamentar (Debates)</option>
+
+                <option value="Direito penal (Brasil)">Direito penal (Brasil)</option>
+
+                <option value="Direito penal (Teoria)">Direito penal (Teoria)</option>
+
+                <option value="Direito penal de adolescentes">Direito penal de adolescentes</option>
+
+                <option value="Direito penal e Direitos Humanos">Direito penal e Direitos Humanos</option>
+
+                <option value="Direito penal internacional">Direito penal internacional</option>
+
+                <option value="Direito penitenciario (História)">Direito penitenciario (História)</option>
+
+                <option value="Direito penitenciário">Direito penitenciário</option>
+
+                <option value="Direito positivo">Direito positivo</option>
+
+                <option value="Direito processo penal (Brasil - Documentos legais)">Direito processo penal (Brasil - Documentos legais)</option>
+
+                <option value="Direito processual civil (Brasil)">Direito processual civil (Brasil)</option>
+
+                <option value="Direito processual do trabalho">Direito processual do trabalho</option>
+
+                <option value="Dogmática Jurídica">Dogmática Jurídica</option>
+
+                <option value="Doutrina jurídica">Doutrina jurídica</option>
+
+                <option value="Ensino Jurídico">Ensino Jurídico</option>
+
+                <option value="Estado (Personalidade jurídica)">Estado (Personalidade jurídica)</option>
+
+                <option value="Filosofia jurídica">Filosofia jurídica</option>
+
+                <option value="Gnoseologia Jurídica">Gnoseologia Jurídica</option>
+
+                <option value="Igualdade civil e politica">Igualdade civil e politica</option>
+
+                <option value="Internet (Aspectos jurídicos)">Internet (Aspectos jurídicos)</option>
+
+                <option value="Lei Processual">Lei Processual</option>
+
+                <option value="Linguagem Jurídica">Linguagem Jurídica</option>
+
+                <option value="Linguistica Jurídica">Linguistica Jurídica</option>
+
+                <option value="Linguística jurídica (Língua latim)">Linguística jurídica (Língua latim)</option>
+
+                <option value="Meio ambiente(Política nacional)">Meio ambiente(Política nacional)</option>
+
+                <option value="Metodologia jurídica">Metodologia jurídica</option>
+
+                <option value="Monografia jurídica">Monografia jurídica</option>
+
+                <option value="Negócio Jurídico">Negócio Jurídico</option>
+
+                <option value="Norma jurídica - Lei">Norma jurídica - Lei</option>
+
+                <option value="Normas Processuais (Civis)">Normas Processuais (Civis)</option>
+
+                <option value="Nulidade processual">Nulidade processual</option>
+
+                <option value="OAB - Brasil (ensino jurídico)">OAB - Brasil (ensino jurídico)</option>
+
+                <option value="Ontologia jurídica">Ontologia jurídica</option>
+
+                <option value="Ordem Jurídica">Ordem Jurídica</option>
+
+                <option value="Ordenamento jurídico (Projeto de lei)">Ordenamento jurídico (Projeto de lei)</option>
+
+                <option value="Organização Administrativa(política)">Organização Administrativa(política)</option>
+
+                <option value="Pensamento Jurídico">Pensamento Jurídico</option>
+
+                <option value="Personalidade jurídica">Personalidade jurídica</option>
+
+                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+
+                <option value="Pessoa jurídica (Corporações internacionais)">Pessoa jurídica (Corporações internacionais)</option>
+
+                <option value="Política Agrária">Política Agrária</option>
+
+                <option value="Política ambiental">Política ambiental</option>
+
+                <option value="Política criminal">Política criminal</option>
+
+                <option value="Portugues jurídico">Portugues jurídico</option>
+
+                <option value="Positivismo jurídico">Positivismo jurídico</option>
+
+                <option value="Procedimentos especiais(processo civil)">Procedimentos especiais(processo civil)</option>
+
+                <option value="Processo Cautelar">Processo Cautelar</option>
+
+                <option value="Processo Civil (Brasil - Exercícios práticos)">Processo Civil (Brasil - Exercícios práticos)</option>
+
+                <option value="Processo Civil (Prática)">Processo Civil (Prática)</option>
+
+                <option value="Processo Civil (Resumo)">Processo Civil (Resumo)</option>
+
+                <option value="Processo Legal">Processo Legal</option>
+
+                <option value="Processo Legislativo">Processo Legislativo</option>
+
+                <option value="Processo Legislativo (Brasil)">Processo Legislativo (Brasil)</option>
+
+                <option value="Processo Penal">Processo Penal</option>
+
+                <option value="Processo Trabalhista">Processo Trabalhista</option>
+
+                <option value="Processo administrativo">Processo administrativo</option>
+
+                <option value="Processo civil (Alemanha)">Processo civil (Alemanha)</option>
+
+                <option value="Processo civil (Brasil)">Processo civil (Brasil)</option>
+
+                <option value="Processo civil (Itália)">Processo civil (Itália)</option>
+
+                <option value="Processo civil (Manual brasileiro)">Processo civil (Manual brasileiro)</option>
+
+                <option value="Processo civil (Península Ibérica)">Processo civil (Península Ibérica)</option>
+
+                <option value="Processo civil (Prática)">Processo civil (Prática)</option>
+
+                <option value="Processo civil (Reunificação)">Processo civil (Reunificação)</option>
+
+                <option value="Processo civil (Romano)">Processo civil (Romano)</option>
+
+                <option value="Processo de Inventário">Processo de Inventário</option>
+
+                <option value="Processo de divorcio">Processo de divorcio</option>
+
+                <option value="Processo de execução">Processo de execução</option>
+
+                <option value="Processo disciplinar">Processo disciplinar</option>
+
+                <option value="Processo do Trabalho (Autonomia)">Processo do Trabalho (Autonomia)</option>
+
+                <option value="Processo eleitoral">Processo eleitoral</option>
+
+                <option value="Processo eletrônico">Processo eletrônico</option>
+
+                <option value="Processo falimentar">Processo falimentar</option>
+
+                <option value="Processo jurisdição voluntária">Processo jurisdição voluntária</option>
+
+                <option value="Processo ordinário">Processo ordinário</option>
+
+                <option value="Processo previdenciário">Processo previdenciário</option>
+
+                <option value="Processo simplificado">Processo simplificado</option>
+
+                <option value="Processo sumário">Processo sumário</option>
+
+                <option value="Processo trabalho (Alemanha)">Processo trabalho (Alemanha)</option>
+
+                <option value="Processo trabalho (Argentina)">Processo trabalho (Argentina)</option>
+
+                <option value="Processo trabalho (Brasil)">Processo trabalho (Brasil)</option>
+
+                <option value="Processo trabalho (Descrições bibliográficas)">Processo trabalho (Descrições bibliográficas)</option>
+
+                <option value="Processo trabalho (Espanha)">Processo trabalho (Espanha)</option>
+
+                <option value="Processo trabalho (Estados Unidos)">Processo trabalho (Estados Unidos)</option>
+
+                <option value="Processo trabalho (França)">Processo trabalho (França)</option>
+
+                <option value="Processo trabalho (Grã-Bretanha)">Processo trabalho (Grã-Bretanha)</option>
+
+                <option value="Processo trabalho (Itália)">Processo trabalho (Itália)</option>
+
+                <option value="Processo trabalho (México)">Processo trabalho (México)</option>
+
+                <option value="Processo trabalho (Portugal)">Processo trabalho (Portugal)</option>
+
+                <option value="Processo trabalho (Resumo)">Processo trabalho (Resumo)</option>
+
+                <option value="Processo urgente">Processo urgente</option>
+
+                <option value="Processos Criminais">Processos Criminais</option>
+
+                <option value="Processos criminais (Prática de campo)">Processos criminais (Prática de campo)</option>
+
+                <option value="Processos incidentes">Processos incidentes</option>
+
+                <option value="Processos latentes">Processos latentes</option>
+
+                <option value="Processos parlamentares">Processos parlamentares</option>
+
+                <option value="Processos sociais">Processos sociais</option>
+
+                <option value="Processos sociais - Dinâmica social">Processos sociais - Dinâmica social</option>
+
+                <option value="Processual (técnica)">Processual (técnica)</option>
+
+                <option value="Prática Processual Civil">Prática Processual Civil</option>
+
+                <option value="Psicologia jurídica">Psicologia jurídica</option>
+
+                <option value="Recursos processuais">Recursos processuais</option>
+
+                <option value="Regime Jurídico">Regime Jurídico</option>
+
+                <option value="Remédios jurídicos">Remédios jurídicos</option>
+
+                <option value="Responsabilidade Jurídica">Responsabilidade Jurídica</option>
+
+                <option value="Sistema Processual">Sistema Processual</option>
+
+                <option value="Sistema jurídico">Sistema jurídico</option>
+
+                <option value="Sistema jurídico brasileiro">Sistema jurídico brasileiro</option>
+
+                <option value="Sociologia Jurídica">Sociologia Jurídica</option>
+
+                <option value="Sociologismo Jurídico">Sociologismo Jurídico</option>
+
+                <option value="Suspensão condicional - Processo">Suspensão condicional - Processo</option>
+
+                <option value="Teoria geral do processo (Brasil)">Teoria geral do processo (Brasil)</option>
+
+                <option value="Tribunal(Processo)">Tribunal(Processo)</option>
+
+                <option value="Tutela(processo civil)">Tutela(processo civil)</option>
+
+                <option value="Ética jurídica">Ética jurídica</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_assunto4">Assunto 4</label>
+              <select name="assunto4" id="id_assunto4" class="form-control" title="">
+                <option value="" selected>---------</option>
+
+                <option value=" Direito constitucional Francês"> Direito constitucional Francês</option>
+
+                <option value="Antropologia jurídica">Antropologia jurídica</option>
+
+                <option value="Antropologia política">Antropologia política</option>
+
+                <option value="Argumentação jurídica">Argumentação jurídica</option>
+
+                <option value="Arrendatário (Direitos)">Arrendatário (Direitos)</option>
+
+                <option value="Arte do Direito">Arte do Direito</option>
+
+                <option value="Assistência jurídica">Assistência jurídica</option>
+
+                <option value="Assistência jurídica gratuíta">Assistência jurídica gratuíta</option>
+
+                <option value="Ato Processual">Ato Processual</option>
+
+                <option value="Ações processórias">Ações processórias</option>
+
+                <option value="Ciência jurídica">Ciência jurídica</option>
+
+                <option value="Ciências Jurídicas">Ciências Jurídicas</option>
+
+                <option value="Codigo Processual Civil (Projeto de lei)">Codigo Processual Civil (Projeto de lei)</option>
+
+                <option value="Comunicação Jurídica">Comunicação Jurídica</option>
+
+                <option value="Consumidor (Política governamental)">Consumidor (Política governamental)</option>
+
+                <option value="Cultura Jurídica">Cultura Jurídica</option>
+
+                <option value="Dano ambiental (Direito)">Dano ambiental (Direito)</option>
+
+                <option value="Democracia - Direito público">Democracia - Direito público</option>
+
+                <option value="Direiro penal (Brasil)">Direiro penal (Brasil)</option>
+
+                <option value="Direito">Direito</option>
+
+                <option value="Direito (Alemanha)">Direito (Alemanha)</option>
+
+                <option value="Direito (Brasil)">Direito (Brasil)</option>
+
+                <option value="Direito (Estrutura histórica)">Direito (Estrutura histórica)</option>
+
+                <option value="Direito (Grecia)">Direito (Grecia)</option>
+
+                <option value="Direito (História)">Direito (História)</option>
+
+                <option value="Direito (Idade media)">Direito (Idade media)</option>
+
+                <option value="Direito (Leis de proteção da infância)">Direito (Leis de proteção da infância)</option>
+
+                <option value="Direito (Missões Jesuíticas)">Direito (Missões Jesuíticas)</option>
+
+                <option value="Direito (Moderno)">Direito (Moderno)</option>
+
+                <option value="Direito (Mundo Ocidental)">Direito (Mundo Ocidental)</option>
+
+                <option value="Direito (Regime militar)">Direito (Regime militar)</option>
+
+                <option value="Direito (Sistema administrativo)">Direito (Sistema administrativo)</option>
+
+                <option value="Direito (Trabalhos finais de curso)">Direito (Trabalhos finais de curso)</option>
+
+                <option value="Direito - Educação (Criança)">Direito - Educação (Criança)</option>
+
+                <option value="Direito - Juizados especiais (Brasil)">Direito - Juizados especiais (Brasil)</option>
+
+                <option value="Direito - dicionário - língua portuguesa - Brasil">Direito - dicionário - língua portuguesa - Brasil</option>
+
+                <option value="Direito Administrativo e Direito tributário">Direito Administrativo e Direito tributário</option>
+
+                <option value="Direito Administrativo especializado">Direito Administrativo especializado</option>
+
+                <option value="Direito Administrativo geral">Direito Administrativo geral</option>
+
+                <option value="Direito Ambiental">Direito Ambiental</option>
+
+                <option value="Direito Ambiental (Brasil)">Direito Ambiental (Brasil)</option>
+
+                <option value="Direito Ambiental (Danos)">Direito Ambiental (Danos)</option>
+
+                <option value="Direito Ambiental (Proteção)">Direito Ambiental (Proteção)</option>
+
+                <option value="Direito Ambiental Brasileiro">Direito Ambiental Brasileiro</option>
+
+                <option value="Direito Civil (Brasil - Documentos legais)">Direito Civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial">Direito Comercial</option>
+
+                <option value="Direito Comercial (Brasil - Documentos legais)">Direito Comercial (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial (Manuais)">Direito Comercial (Manuais)</option>
+
+                <option value="Direito Constitucional (Administração pública)">Direito Constitucional (Administração pública)</option>
+
+                <option value="Direito Constitucional (Brasil)">Direito Constitucional (Brasil)</option>
+
+                <option value="Direito Constitucional (Instruções Normativas)">Direito Constitucional (Instruções Normativas)</option>
+
+                <option value="Direito Constitucional (Português)">Direito Constitucional (Português)</option>
+
+                <option value="Direito Constitucional (Trabalhos finais de curso)">Direito Constitucional (Trabalhos finais de curso)</option>
+
+                <option value="Direito Constitucional - Documentos técnicos">Direito Constitucional - Documentos técnicos</option>
+
+                <option value="Direito Econômico">Direito Econômico</option>
+
+                <option value="Direito Econômico - Fazenda Pública">Direito Econômico - Fazenda Pública</option>
+
+                <option value="Direito Grego">Direito Grego</option>
+
+                <option value="Direito Hebraico">Direito Hebraico</option>
+
+                <option value="Direito Humanos">Direito Humanos</option>
+
+                <option value="Direito Internacional privado (conflitos)">Direito Internacional privado (conflitos)</option>
+
+                <option value="Direito Intertemporal">Direito Intertemporal</option>
+
+                <option value="Direito Jurídico">Direito Jurídico</option>
+
+                <option value="Direito Parlamentar">Direito Parlamentar</option>
+
+                <option value="Direito Penal">Direito Penal</option>
+
+                <option value="Direito Penal - Biotecnologia">Direito Penal - Biotecnologia</option>
+
+                <option value="Direito Penal e Direitos Humanos no Brasil">Direito Penal e Direitos Humanos no Brasil</option>
+
+                <option value="Direito Português">Direito Português</option>
+
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+                <option value="Direito Processual">Direito Processual</option>
+
+                <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+                <option value="Direito Processual Civil (Manuais)">Direito Processual Civil (Manuais)</option>
+
+                <option value="Direito a Justiça - Garantia constitucional">Direito a Justiça - Garantia constitucional</option>
+
+                <option value="Direito a apelação">Direito a apelação</option>
+
+                <option value="Direito a defesa">Direito a defesa</option>
+
+                <option value="Direito administrativo">Direito administrativo</option>
+
+                <option value="Direito administrativo (Especializado)">Direito administrativo (Especializado)</option>
+
+                <option value="Direito agrário">Direito agrário</option>
+
+                <option value="Direito agrário (Brasil)">Direito agrário (Brasil)</option>
+
+                <option value="Direito ambiental (Fatores naturais)">Direito ambiental (Fatores naturais)</option>
+
+                <option value="Direito ambiental (Resumo)">Direito ambiental (Resumo)</option>
+
+                <option value="Direito ambiental (Sociologia dos subsistivos ecológicos)">Direito ambiental (Sociologia dos subsistivos ecológicos)</option>
+
+                <option value="Direito ambiental (Tocantins)">Direito ambiental (Tocantins)</option>
+
+                <option value="Direito ambiental e sociedade">Direito ambiental e sociedade</option>
+
+                <option value="Direito antitruste">Direito antitruste</option>
+
+                <option value="Direito ao bem-estar social">Direito ao bem-estar social</option>
+
+                <option value="Direito ao trabalho">Direito ao trabalho</option>
+
+                <option value="Direito ao voto">Direito ao voto</option>
+
+                <option value="Direito autorais">Direito autorais</option>
+
+                <option value="Direito aéreo militar">Direito aéreo militar</option>
+
+                <option value="Direito brasiliero">Direito brasiliero</option>
+
+                <option value="Direito civil">Direito civil</option>
+
+                <option value="Direito civil (Brasil - Documentos legais)">Direito civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito civil (Brasil)">Direito civil (Brasil)</option>
+
+                <option value="Direito civil (manual jurídico)">Direito civil (manual jurídico)</option>
+
+                <option value="Direito comercial - Brasil">Direito comercial - Brasil</option>
+
+                <option value="Direito comum">Direito comum</option>
+
+                <option value="Direito constitucional">Direito constitucional</option>
+
+                <option value="Direito constitucional (Argentino)">Direito constitucional (Argentino)</option>
+
+                <option value="Direito constitucional (Austríaco)">Direito constitucional (Austríaco)</option>
+
+                <option value="Direito constitucional (Espanhol)">Direito constitucional (Espanhol)</option>
+
+                <option value="Direito constitucional (Holandês)">Direito constitucional (Holandês)</option>
+
+                <option value="Direito constitucional (Inglês)">Direito constitucional (Inglês)</option>
+
+                <option value="Direito constitucional (Italiano)">Direito constitucional (Italiano)</option>
+
+                <option value="Direito constitucional (Mexicano)">Direito constitucional (Mexicano)</option>
+
+                <option value="Direito constitucional (Norte Americano)">Direito constitucional (Norte Americano)</option>
+
+                <option value="Direito constitucional (Suíço)">Direito constitucional (Suíço)</option>
+
+                <option value="Direito constitucional (Teoria geral do processo)">Direito constitucional (Teoria geral do processo)</option>
+
+                <option value="Direito constitucional Alemão">Direito constitucional Alemão</option>
+
+                <option value="Direito constitucional processual">Direito constitucional processual</option>
+
+                <option value="Direito consular">Direito consular</option>
+
+                <option value="Direito consular(tipo)">Direito consular(tipo)</option>
+
+                <option value="Direito contratual">Direito contratual</option>
+
+                <option value="Direito contratual (Brasil)">Direito contratual (Brasil)</option>
+
+                <option value="Direito criminal">Direito criminal</option>
+
+                <option value="Direito criminal (Projeto de lei)">Direito criminal (Projeto de lei)</option>
+
+                <option value="Direito da terra">Direito da terra</option>
+
+                <option value="Direito das coisas">Direito das coisas</option>
+
+                <option value="Direito das obrigações">Direito das obrigações</option>
+
+                <option value="Direito das sociedades">Direito das sociedades</option>
+
+                <option value="Direito das sociedades, firmas, empresas">Direito das sociedades, firmas, empresas</option>
+
+                <option value="Direito de ensinar e aprender">Direito de ensinar e aprender</option>
+
+                <option value="Direito de escolha - Residência - Criança/Adolescente">Direito de escolha - Residência - Criança/Adolescente</option>
+
+                <option value="Direito de família">Direito de família</option>
+
+                <option value="Direito de guerra">Direito de guerra</option>
+
+                <option value="Direito de petição">Direito de petição</option>
+
+                <option value="Direito de propriedade no casamento na ausencia de acordo">Direito de propriedade no casamento na ausencia de acordo</option>
+
+                <option value="Direito de recisão">Direito de recisão</option>
+
+                <option value="Direito diplomático">Direito diplomático</option>
+
+                <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+                <option value="Direito do Consumidor (Documentos legais)">Direito do Consumidor (Documentos legais)</option>
+
+                <option value="Direito do Trabalho (Manuais)">Direito do Trabalho (Manuais)</option>
+
+                <option value="Direito do povo">Direito do povo</option>
+
+                <option value="Direito do trabalho">Direito do trabalho</option>
+
+                <option value="Direito do trabalho (Brasil)">Direito do trabalho (Brasil)</option>
+
+                <option value="Direito do trabalho - Ética moral">Direito do trabalho - Ética moral</option>
+
+                <option value="Direito e Legislação">Direito e Legislação</option>
+
+                <option value="Direito eleitoral">Direito eleitoral</option>
+
+                <option value="Direito eleitoral (Manuais)">Direito eleitoral (Manuais)</option>
+
+                <option value="Direito empresarial">Direito empresarial</option>
+
+                <option value="Direito falimentar">Direito falimentar</option>
+
+                <option value="Direito financeiro">Direito financeiro</option>
+
+                <option value="Direito fundiário">Direito fundiário</option>
+
+                <option value="Direito individual">Direito individual</option>
+
+                <option value="Direito internacional">Direito internacional</option>
+
+                <option value="Direito internacional (Pessoas criminosas)">Direito internacional (Pessoas criminosas)</option>
+
+                <option value="Direito internacional privado">Direito internacional privado</option>
+
+                <option value="Direito internacional público">Direito internacional público</option>
+
+                <option value="Direito lusitano">Direito lusitano</option>
+
+                <option value="Direito militar">Direito militar</option>
+
+                <option value="Direito municipal">Direito municipal</option>
+
+                <option value="Direito nacional">Direito nacional</option>
+
+                <option value="Direito natural">Direito natural</option>
+
+                <option value="Direito parlamentar (Debates)">Direito parlamentar (Debates)</option>
+
+                <option value="Direito penal (Brasil)">Direito penal (Brasil)</option>
+
+                <option value="Direito penal (Teoria)">Direito penal (Teoria)</option>
+
+                <option value="Direito penal de adolescentes">Direito penal de adolescentes</option>
+
+                <option value="Direito penal e Direitos Humanos">Direito penal e Direitos Humanos</option>
+
+                <option value="Direito penal internacional">Direito penal internacional</option>
+
+                <option value="Direito penitenciario (História)">Direito penitenciario (História)</option>
+
+                <option value="Direito penitenciário">Direito penitenciário</option>
+
+                <option value="Direito positivo">Direito positivo</option>
+
+                <option value="Direito processo penal (Brasil - Documentos legais)">Direito processo penal (Brasil - Documentos legais)</option>
+
+                <option value="Direito processual civil (Brasil)">Direito processual civil (Brasil)</option>
+
+                <option value="Direito processual do trabalho">Direito processual do trabalho</option>
+
+                <option value="Dogmática Jurídica">Dogmática Jurídica</option>
+
+                <option value="Doutrina jurídica">Doutrina jurídica</option>
+
+                <option value="Ensino Jurídico">Ensino Jurídico</option>
+
+                <option value="Estado (Personalidade jurídica)">Estado (Personalidade jurídica)</option>
+
+                <option value="Filosofia jurídica">Filosofia jurídica</option>
+
+                <option value="Gnoseologia Jurídica">Gnoseologia Jurídica</option>
+
+                <option value="Igualdade civil e politica">Igualdade civil e politica</option>
+
+                <option value="Internet (Aspectos jurídicos)">Internet (Aspectos jurídicos)</option>
+
+                <option value="Lei Processual">Lei Processual</option>
+
+                <option value="Linguagem Jurídica">Linguagem Jurídica</option>
+
+                <option value="Linguistica Jurídica">Linguistica Jurídica</option>
+
+                <option value="Linguística jurídica (Língua latim)">Linguística jurídica (Língua latim)</option>
+
+                <option value="Meio ambiente(Política nacional)">Meio ambiente(Política nacional)</option>
+
+                <option value="Metodologia jurídica">Metodologia jurídica</option>
+
+                <option value="Monografia jurídica">Monografia jurídica</option>
+
+                <option value="Negócio Jurídico">Negócio Jurídico</option>
+
+                <option value="Norma jurídica - Lei">Norma jurídica - Lei</option>
+
+                <option value="Normas Processuais (Civis)">Normas Processuais (Civis)</option>
+
+                <option value="Nulidade processual">Nulidade processual</option>
+
+                <option value="OAB - Brasil (ensino jurídico)">OAB - Brasil (ensino jurídico)</option>
+
+                <option value="Ontologia jurídica">Ontologia jurídica</option>
+
+                <option value="Ordem Jurídica">Ordem Jurídica</option>
+
+                <option value="Ordenamento jurídico (Projeto de lei)">Ordenamento jurídico (Projeto de lei)</option>
+
+                <option value="Organização Administrativa(política)">Organização Administrativa(política)</option>
+
+                <option value="Pensamento Jurídico">Pensamento Jurídico</option>
+
+                <option value="Personalidade jurídica">Personalidade jurídica</option>
+
+                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+
+                <option value="Pessoa jurídica (Corporações internacionais)">Pessoa jurídica (Corporações internacionais)</option>
+
+                <option value="Política Agrária">Política Agrária</option>
+
+                <option value="Política ambiental">Política ambiental</option>
+
+                <option value="Política criminal">Política criminal</option>
+
+                <option value="Portugues jurídico">Portugues jurídico</option>
+
+                <option value="Positivismo jurídico">Positivismo jurídico</option>
+
+                <option value="Procedimentos especiais(processo civil)">Procedimentos especiais(processo civil)</option>
+
+                <option value="Processo Cautelar">Processo Cautelar</option>
+
+                <option value="Processo Civil (Brasil - Exercícios práticos)">Processo Civil (Brasil - Exercícios práticos)</option>
+
+                <option value="Processo Civil (Prática)">Processo Civil (Prática)</option>
+
+                <option value="Processo Civil (Resumo)">Processo Civil (Resumo)</option>
+
+                <option value="Processo Legal">Processo Legal</option>
+
+                <option value="Processo Legislativo">Processo Legislativo</option>
+
+                <option value="Processo Legislativo (Brasil)">Processo Legislativo (Brasil)</option>
+
+                <option value="Processo Penal">Processo Penal</option>
+
+                <option value="Processo Trabalhista">Processo Trabalhista</option>
+
+                <option value="Processo administrativo">Processo administrativo</option>
+
+                <option value="Processo civil (Alemanha)">Processo civil (Alemanha)</option>
+
+                <option value="Processo civil (Brasil)">Processo civil (Brasil)</option>
+
+                <option value="Processo civil (Itália)">Processo civil (Itália)</option>
+
+                <option value="Processo civil (Manual brasileiro)">Processo civil (Manual brasileiro)</option>
+
+                <option value="Processo civil (Península Ibérica)">Processo civil (Península Ibérica)</option>
+
+                <option value="Processo civil (Prática)">Processo civil (Prática)</option>
+
+                <option value="Processo civil (Reunificação)">Processo civil (Reunificação)</option>
+
+                <option value="Processo civil (Romano)">Processo civil (Romano)</option>
+
+                <option value="Processo de Inventário">Processo de Inventário</option>
+
+                <option value="Processo de divorcio">Processo de divorcio</option>
+
+                <option value="Processo de execução">Processo de execução</option>
+
+                <option value="Processo disciplinar">Processo disciplinar</option>
+
+                <option value="Processo do Trabalho (Autonomia)">Processo do Trabalho (Autonomia)</option>
+
+                <option value="Processo eleitoral">Processo eleitoral</option>
+
+                <option value="Processo eletrônico">Processo eletrônico</option>
+
+                <option value="Processo falimentar">Processo falimentar</option>
+
+                <option value="Processo jurisdição voluntária">Processo jurisdição voluntária</option>
+
+                <option value="Processo ordinário">Processo ordinário</option>
+
+                <option value="Processo previdenciário">Processo previdenciário</option>
+
+                <option value="Processo simplificado">Processo simplificado</option>
+
+                <option value="Processo sumário">Processo sumário</option>
+
+                <option value="Processo trabalho (Alemanha)">Processo trabalho (Alemanha)</option>
+
+                <option value="Processo trabalho (Argentina)">Processo trabalho (Argentina)</option>
+
+                <option value="Processo trabalho (Brasil)">Processo trabalho (Brasil)</option>
+
+                <option value="Processo trabalho (Descrições bibliográficas)">Processo trabalho (Descrições bibliográficas)</option>
+
+                <option value="Processo trabalho (Espanha)">Processo trabalho (Espanha)</option>
+
+                <option value="Processo trabalho (Estados Unidos)">Processo trabalho (Estados Unidos)</option>
+
+                <option value="Processo trabalho (França)">Processo trabalho (França)</option>
+
+                <option value="Processo trabalho (Grã-Bretanha)">Processo trabalho (Grã-Bretanha)</option>
+
+                <option value="Processo trabalho (Itália)">Processo trabalho (Itália)</option>
+
+                <option value="Processo trabalho (México)">Processo trabalho (México)</option>
+
+                <option value="Processo trabalho (Portugal)">Processo trabalho (Portugal)</option>
+
+                <option value="Processo trabalho (Resumo)">Processo trabalho (Resumo)</option>
+
+                <option value="Processo urgente">Processo urgente</option>
+
+                <option value="Processos Criminais">Processos Criminais</option>
+
+                <option value="Processos criminais (Prática de campo)">Processos criminais (Prática de campo)</option>
+
+                <option value="Processos incidentes">Processos incidentes</option>
+
+                <option value="Processos latentes">Processos latentes</option>
+
+                <option value="Processos parlamentares">Processos parlamentares</option>
+
+                <option value="Processos sociais">Processos sociais</option>
+
+                <option value="Processos sociais - Dinâmica social">Processos sociais - Dinâmica social</option>
+
+                <option value="Processual (técnica)">Processual (técnica)</option>
+
+                <option value="Prática Processual Civil">Prática Processual Civil</option>
+
+                <option value="Psicologia jurídica">Psicologia jurídica</option>
+
+                <option value="Recursos processuais">Recursos processuais</option>
+
+                <option value="Regime Jurídico">Regime Jurídico</option>
+
+                <option value="Remédios jurídicos">Remédios jurídicos</option>
+
+                <option value="Responsabilidade Jurídica">Responsabilidade Jurídica</option>
+
+                <option value="Sistema Processual">Sistema Processual</option>
+
+                <option value="Sistema jurídico">Sistema jurídico</option>
+
+                <option value="Sistema jurídico brasileiro">Sistema jurídico brasileiro</option>
+
+                <option value="Sociologia Jurídica">Sociologia Jurídica</option>
+
+                <option value="Sociologismo Jurídico">Sociologismo Jurídico</option>
+
+                <option value="Suspensão condicional - Processo">Suspensão condicional - Processo</option>
+
+                <option value="Teoria geral do processo (Brasil)">Teoria geral do processo (Brasil)</option>
+
+                <option value="Tribunal(Processo)">Tribunal(Processo)</option>
+
+                <option value="Tutela(processo civil)">Tutela(processo civil)</option>
+
+                <option value="Ética jurídica">Ética jurídica</option>
+              </select>
+              
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_assunto5">Assunto 5</label>
+              <select name="assunto5" id="id_assunto5" class="form-control" title="">
+                <option value="" selected>---------</option>
+
+                <option value=" Direito constitucional Francês"> Direito constitucional Francês</option>
+
+                <option value="Antropologia jurídica">Antropologia jurídica</option>
+
+                <option value="Antropologia política">Antropologia política</option>
+
+                <option value="Argumentação jurídica">Argumentação jurídica</option>
+
+                <option value="Arrendatário (Direitos)">Arrendatário (Direitos)</option>
+
+                <option value="Arte do Direito">Arte do Direito</option>
+
+                <option value="Assistência jurídica">Assistência jurídica</option>
+
+                <option value="Assistência jurídica gratuíta">Assistência jurídica gratuíta</option>
+
+                <option value="Ato Processual">Ato Processual</option>
+
+                <option value="Ações processórias">Ações processórias</option>
+
+                <option value="Ciência jurídica">Ciência jurídica</option>
+
+                <option value="Ciências Jurídicas">Ciências Jurídicas</option>
+
+                <option value="Codigo Processual Civil (Projeto de lei)">Codigo Processual Civil (Projeto de lei)</option>
+
+                <option value="Comunicação Jurídica">Comunicação Jurídica</option>
+
+                <option value="Consumidor (Política governamental)">Consumidor (Política governamental)</option>
+
+                <option value="Cultura Jurídica">Cultura Jurídica</option>
+
+                <option value="Dano ambiental (Direito)">Dano ambiental (Direito)</option>
+
+                <option value="Democracia - Direito público">Democracia - Direito público</option>
+
+                <option value="Direiro penal (Brasil)">Direiro penal (Brasil)</option>
+
+                <option value="Direito">Direito</option>
+
+                <option value="Direito (Alemanha)">Direito (Alemanha)</option>
+
+                <option value="Direito (Brasil)">Direito (Brasil)</option>
+
+                <option value="Direito (Estrutura histórica)">Direito (Estrutura histórica)</option>
+
+                <option value="Direito (Grecia)">Direito (Grecia)</option>
+
+                <option value="Direito (História)">Direito (História)</option>
+
+                <option value="Direito (Idade media)">Direito (Idade media)</option>
+
+                <option value="Direito (Leis de proteção da infância)">Direito (Leis de proteção da infância)</option>
+
+                <option value="Direito (Missões Jesuíticas)">Direito (Missões Jesuíticas)</option>
+
+                <option value="Direito (Moderno)">Direito (Moderno)</option>
+
+                <option value="Direito (Mundo Ocidental)">Direito (Mundo Ocidental)</option>
+
+                <option value="Direito (Regime militar)">Direito (Regime militar)</option>
+
+                <option value="Direito (Sistema administrativo)">Direito (Sistema administrativo)</option>
+
+                <option value="Direito (Trabalhos finais de curso)">Direito (Trabalhos finais de curso)</option>
+
+                <option value="Direito - Educação (Criança)">Direito - Educação (Criança)</option>
+
+                <option value="Direito - Juizados especiais (Brasil)">Direito - Juizados especiais (Brasil)</option>
+
+                <option value="Direito - dicionário - língua portuguesa - Brasil">Direito - dicionário - língua portuguesa - Brasil</option>
+
+                <option value="Direito Administrativo e Direito tributário">Direito Administrativo e Direito tributário</option>
+
+                <option value="Direito Administrativo especializado">Direito Administrativo especializado</option>
+
+                <option value="Direito Administrativo geral">Direito Administrativo geral</option>
+
+                <option value="Direito Ambiental">Direito Ambiental</option>
+
+                <option value="Direito Ambiental (Brasil)">Direito Ambiental (Brasil)</option>
+
+                <option value="Direito Ambiental (Danos)">Direito Ambiental (Danos)</option>
+
+                <option value="Direito Ambiental (Proteção)">Direito Ambiental (Proteção)</option>
+
+                <option value="Direito Ambiental Brasileiro">Direito Ambiental Brasileiro</option>
+
+                <option value="Direito Civil (Brasil - Documentos legais)">Direito Civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial">Direito Comercial</option>
+
+                <option value="Direito Comercial (Brasil - Documentos legais)">Direito Comercial (Brasil - Documentos legais)</option>
+
+                <option value="Direito Comercial (Manuais)">Direito Comercial (Manuais)</option>
+
+                <option value="Direito Constitucional (Administração pública)">Direito Constitucional (Administração pública)</option>
+
+                <option value="Direito Constitucional (Brasil)">Direito Constitucional (Brasil)</option>
+
+                <option value="Direito Constitucional (Instruções Normativas)">Direito Constitucional (Instruções Normativas)</option>
+
+                <option value="Direito Constitucional (Português)">Direito Constitucional (Português)</option>
+
+                <option value="Direito Constitucional (Trabalhos finais de curso)">Direito Constitucional (Trabalhos finais de curso)</option>
+
+                <option value="Direito Constitucional - Documentos técnicos">Direito Constitucional - Documentos técnicos</option>
+
+                <option value="Direito Econômico">Direito Econômico</option>
+
+                <option value="Direito Econômico - Fazenda Pública">Direito Econômico - Fazenda Pública</option>
+
+                <option value="Direito Grego">Direito Grego</option>
+
+                <option value="Direito Hebraico">Direito Hebraico</option>
+
+                <option value="Direito Humanos">Direito Humanos</option>
+
+                <option value="Direito Internacional privado (conflitos)">Direito Internacional privado (conflitos)</option>
+
+                <option value="Direito Intertemporal">Direito Intertemporal</option>
+
+                <option value="Direito Jurídico">Direito Jurídico</option>
+
+                <option value="Direito Parlamentar">Direito Parlamentar</option>
+
+                <option value="Direito Penal">Direito Penal</option>
+
+                <option value="Direito Penal - Biotecnologia">Direito Penal - Biotecnologia</option>
+
+                <option value="Direito Penal e Direitos Humanos no Brasil">Direito Penal e Direitos Humanos no Brasil</option>
+
+                <option value="Direito Português">Direito Português</option>
+
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+
+                <option value="Direito Processual">Direito Processual</option>
+
+                <option value="Direito Processual Civil">Direito Processual Civil</option>
+
+                <option value="Direito Processual Civil (Manuais)">Direito Processual Civil (Manuais)</option>
+
+                <option value="Direito a Justiça - Garantia constitucional">Direito a Justiça - Garantia constitucional</option>
+
+                <option value="Direito a apelação">Direito a apelação</option>
+
+                <option value="Direito a defesa">Direito a defesa</option>
+
+                <option value="Direito administrativo">Direito administrativo</option>
+
+                <option value="Direito administrativo (Especializado)">Direito administrativo (Especializado)</option>
+
+                <option value="Direito agrário">Direito agrário</option>
+
+                <option value="Direito agrário (Brasil)">Direito agrário (Brasil)</option>
+
+                <option value="Direito ambiental (Fatores naturais)">Direito ambiental (Fatores naturais)</option>
+
+                <option value="Direito ambiental (Resumo)">Direito ambiental (Resumo)</option>
+
+                <option value="Direito ambiental (Sociologia dos subsistivos ecológicos)">Direito ambiental (Sociologia dos subsistivos ecológicos)</option>
+
+                <option value="Direito ambiental (Tocantins)">Direito ambiental (Tocantins)</option>
+
+                <option value="Direito ambiental e sociedade">Direito ambiental e sociedade</option>
+
+                <option value="Direito antitruste">Direito antitruste</option>
+
+                <option value="Direito ao bem-estar social">Direito ao bem-estar social</option>
+
+                <option value="Direito ao trabalho">Direito ao trabalho</option>
+
+                <option value="Direito ao voto">Direito ao voto</option>
+
+                <option value="Direito autorais">Direito autorais</option>
+
+                <option value="Direito aéreo militar">Direito aéreo militar</option>
+
+                <option value="Direito brasiliero">Direito brasiliero</option>
+
+                <option value="Direito civil">Direito civil</option>
+
+                <option value="Direito civil (Brasil - Documentos legais)">Direito civil (Brasil - Documentos legais)</option>
+
+                <option value="Direito civil (Brasil)">Direito civil (Brasil)</option>
+
+                <option value="Direito civil (manual jurídico)">Direito civil (manual jurídico)</option>
+
+                <option value="Direito comercial - Brasil">Direito comercial - Brasil</option>
+
+                <option value="Direito comum">Direito comum</option>
+
+                <option value="Direito constitucional">Direito constitucional</option>
+
+                <option value="Direito constitucional (Argentino)">Direito constitucional (Argentino)</option>
+
+                <option value="Direito constitucional (Austríaco)">Direito constitucional (Austríaco)</option>
+
+                <option value="Direito constitucional (Espanhol)">Direito constitucional (Espanhol)</option>
+
+                <option value="Direito constitucional (Holandês)">Direito constitucional (Holandês)</option>
+
+                <option value="Direito constitucional (Inglês)">Direito constitucional (Inglês)</option>
+
+                <option value="Direito constitucional (Italiano)">Direito constitucional (Italiano)</option>
+
+                <option value="Direito constitucional (Mexicano)">Direito constitucional (Mexicano)</option>
+
+                <option value="Direito constitucional (Norte Americano)">Direito constitucional (Norte Americano)</option>
+
+                <option value="Direito constitucional (Suíço)">Direito constitucional (Suíço)</option>
+
+                <option value="Direito constitucional (Teoria geral do processo)">Direito constitucional (Teoria geral do processo)</option>
+
+                <option value="Direito constitucional Alemão">Direito constitucional Alemão</option>
+
+                <option value="Direito constitucional processual">Direito constitucional processual</option>
+
+                <option value="Direito consular">Direito consular</option>
+
+                <option value="Direito consular(tipo)">Direito consular(tipo)</option>
+
+                <option value="Direito contratual">Direito contratual</option>
+
+                <option value="Direito contratual (Brasil)">Direito contratual (Brasil)</option>
+
+                <option value="Direito criminal">Direito criminal</option>
+
+                <option value="Direito criminal (Projeto de lei)">Direito criminal (Projeto de lei)</option>
+
+                <option value="Direito da terra">Direito da terra</option>
+
+                <option value="Direito das coisas">Direito das coisas</option>
+
+                <option value="Direito das obrigações">Direito das obrigações</option>
+
+                <option value="Direito das sociedades">Direito das sociedades</option>
+
+                <option value="Direito das sociedades, firmas, empresas">Direito das sociedades, firmas, empresas</option>
+
+                <option value="Direito de ensinar e aprender">Direito de ensinar e aprender</option>
+
+                <option value="Direito de escolha - Residência - Criança/Adolescente">Direito de escolha - Residência - Criança/Adolescente</option>
+
+                <option value="Direito de família">Direito de família</option>
+
+                <option value="Direito de guerra">Direito de guerra</option>
+
+                <option value="Direito de petição">Direito de petição</option>
+
+                <option value="Direito de propriedade no casamento na ausencia de acordo">Direito de propriedade no casamento na ausencia de acordo</option>
+
+                <option value="Direito de recisão">Direito de recisão</option>
+
+                <option value="Direito diplomático">Direito diplomático</option>
+
+                <option value="Direito do Consumidor">Direito do Consumidor</option>
+
+                <option value="Direito do Consumidor (Documentos legais)">Direito do Consumidor (Documentos legais)</option>
+
+                <option value="Direito do Trabalho (Manuais)">Direito do Trabalho (Manuais)</option>
+
+                <option value="Direito do povo">Direito do povo</option>
+
+                <option value="Direito do trabalho">Direito do trabalho</option>
+
+                <option value="Direito do trabalho (Brasil)">Direito do trabalho (Brasil)</option>
+
+                <option value="Direito do trabalho - Ética moral">Direito do trabalho - Ética moral</option>
+
+                <option value="Direito e Legislação">Direito e Legislação</option>
+
+                <option value="Direito eleitoral">Direito eleitoral</option>
+
+                <option value="Direito eleitoral (Manuais)">Direito eleitoral (Manuais)</option>
+
+                <option value="Direito empresarial">Direito empresarial</option>
+
+                <option value="Direito falimentar">Direito falimentar</option>
+
+                <option value="Direito financeiro">Direito financeiro</option>
+
+                <option value="Direito fundiário">Direito fundiário</option>
+
+                <option value="Direito individual">Direito individual</option>
+
+                <option value="Direito internacional">Direito internacional</option>
+
+                <option value="Direito internacional (Pessoas criminosas)">Direito internacional (Pessoas criminosas)</option>
+
+                <option value="Direito internacional privado">Direito internacional privado</option>
+
+                <option value="Direito internacional público">Direito internacional público</option>
+
+                <option value="Direito lusitano">Direito lusitano</option>
+
+                <option value="Direito militar">Direito militar</option>
+
+                <option value="Direito municipal">Direito municipal</option>
+
+                <option value="Direito nacional">Direito nacional</option>
+
+                <option value="Direito natural">Direito natural</option>
+
+                <option value="Direito parlamentar (Debates)">Direito parlamentar (Debates)</option>
+
+                <option value="Direito penal (Brasil)">Direito penal (Brasil)</option>
+
+                <option value="Direito penal (Teoria)">Direito penal (Teoria)</option>
+
+                <option value="Direito penal de adolescentes">Direito penal de adolescentes</option>
+
+                <option value="Direito penal e Direitos Humanos">Direito penal e Direitos Humanos</option>
+
+                <option value="Direito penal internacional">Direito penal internacional</option>
+
+                <option value="Direito penitenciario (História)">Direito penitenciario (História)</option>
+
+                <option value="Direito penitenciário">Direito penitenciário</option>
+
+                <option value="Direito positivo">Direito positivo</option>
+
+                <option value="Direito processo penal (Brasil - Documentos legais)">Direito processo penal (Brasil - Documentos legais)</option>
+
+                <option value="Direito processual civil (Brasil)">Direito processual civil (Brasil)</option>
+
+                <option value="Direito processual do trabalho">Direito processual do trabalho</option>
+
+                <option value="Dogmática Jurídica">Dogmática Jurídica</option>
+
+                <option value="Doutrina jurídica">Doutrina jurídica</option>
+
+                <option value="Ensino Jurídico">Ensino Jurídico</option>
+
+                <option value="Estado (Personalidade jurídica)">Estado (Personalidade jurídica)</option>
+
+                <option value="Filosofia jurídica">Filosofia jurídica</option>
+
+                <option value="Gnoseologia Jurídica">Gnoseologia Jurídica</option>
+
+                <option value="Igualdade civil e politica">Igualdade civil e politica</option>
+
+                <option value="Internet (Aspectos jurídicos)">Internet (Aspectos jurídicos)</option>
+
+                <option value="Lei Processual">Lei Processual</option>
+
+                <option value="Linguagem Jurídica">Linguagem Jurídica</option>
+
+                <option value="Linguistica Jurídica">Linguistica Jurídica</option>
+
+                <option value="Linguística jurídica (Língua latim)">Linguística jurídica (Língua latim)</option>
+
+                <option value="Meio ambiente(Política nacional)">Meio ambiente(Política nacional)</option>
+
+                <option value="Metodologia jurídica">Metodologia jurídica</option>
+
+                <option value="Monografia jurídica">Monografia jurídica</option>
+
+                <option value="Negócio Jurídico">Negócio Jurídico</option>
+
+                <option value="Norma jurídica - Lei">Norma jurídica - Lei</option>
+
+                <option value="Normas Processuais (Civis)">Normas Processuais (Civis)</option>
+
+                <option value="Nulidade processual">Nulidade processual</option>
+
+                <option value="OAB - Brasil (ensino jurídico)">OAB - Brasil (ensino jurídico)</option>
+
+                <option value="Ontologia jurídica">Ontologia jurídica</option>
+
+                <option value="Ordem Jurídica">Ordem Jurídica</option>
+
+                <option value="Ordenamento jurídico (Projeto de lei)">Ordenamento jurídico (Projeto de lei)</option>
+
+                <option value="Organização Administrativa(política)">Organização Administrativa(política)</option>
+
+                <option value="Pensamento Jurídico">Pensamento Jurídico</option>
+
+                <option value="Personalidade jurídica">Personalidade jurídica</option>
+
+                <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+
+                <option value="Pessoa jurídica (Corporações internacionais)">Pessoa jurídica (Corporações internacionais)</option>
+
+                <option value="Política Agrária">Política Agrária</option>
+
+                <option value="Política ambiental">Política ambiental</option>
+
+                <option value="Política criminal">Política criminal</option>
+
+                <option value="Portugues jurídico">Portugues jurídico</option>
+
+                <option value="Positivismo jurídico">Positivismo jurídico</option>
+
+                <option value="Procedimentos especiais(processo civil)">Procedimentos especiais(processo civil)</option>
+
+                <option value="Processo Cautelar">Processo Cautelar</option>
+
+                <option value="Processo Civil (Brasil - Exercícios práticos)">Processo Civil (Brasil - Exercícios práticos)</option>
+
+                <option value="Processo Civil (Prática)">Processo Civil (Prática)</option>
+
+                <option value="Processo Civil (Resumo)">Processo Civil (Resumo)</option>
+
+                <option value="Processo Legal">Processo Legal</option>
+
+                <option value="Processo Legislativo">Processo Legislativo</option>
+
+                <option value="Processo Legislativo (Brasil)">Processo Legislativo (Brasil)</option>
+
+                <option value="Processo Penal">Processo Penal</option>
+
+                <option value="Processo Trabalhista">Processo Trabalhista</option>
+
+                <option value="Processo administrativo">Processo administrativo</option>
+
+                <option value="Processo civil (Alemanha)">Processo civil (Alemanha)</option>
+
+                <option value="Processo civil (Brasil)">Processo civil (Brasil)</option>
+
+                <option value="Processo civil (Itália)">Processo civil (Itália)</option>
+
+                <option value="Processo civil (Manual brasileiro)">Processo civil (Manual brasileiro)</option>
+
+                <option value="Processo civil (Península Ibérica)">Processo civil (Península Ibérica)</option>
+
+                <option value="Processo civil (Prática)">Processo civil (Prática)</option>
+
+                <option value="Processo civil (Reunificação)">Processo civil (Reunificação)</option>
+
+                <option value="Processo civil (Romano)">Processo civil (Romano)</option>
+
+                <option value="Processo de Inventário">Processo de Inventário</option>
+
+                <option value="Processo de divorcio">Processo de divorcio</option>
+
+                <option value="Processo de execução">Processo de execução</option>
+
+                <option value="Processo disciplinar">Processo disciplinar</option>
+
+                <option value="Processo do Trabalho (Autonomia)">Processo do Trabalho (Autonomia)</option>
+
+                <option value="Processo eleitoral">Processo eleitoral</option>
+
+                <option value="Processo eletrônico">Processo eletrônico</option>
+
+                <option value="Processo falimentar">Processo falimentar</option>
+
+                <option value="Processo jurisdição voluntária">Processo jurisdição voluntária</option>
+
+                <option value="Processo ordinário">Processo ordinário</option>
+
+                <option value="Processo previdenciário">Processo previdenciário</option>
+
+                <option value="Processo simplificado">Processo simplificado</option>
+
+                <option value="Processo sumário">Processo sumário</option>
+
+                <option value="Processo trabalho (Alemanha)">Processo trabalho (Alemanha)</option>
+
+                <option value="Processo trabalho (Argentina)">Processo trabalho (Argentina)</option>
+
+                <option value="Processo trabalho (Brasil)">Processo trabalho (Brasil)</option>
+
+                <option value="Processo trabalho (Descrições bibliográficas)">Processo trabalho (Descrições bibliográficas)</option>
+
+                <option value="Processo trabalho (Espanha)">Processo trabalho (Espanha)</option>
+
+                <option value="Processo trabalho (Estados Unidos)">Processo trabalho (Estados Unidos)</option>
+
+                <option value="Processo trabalho (França)">Processo trabalho (França)</option>
+
+                <option value="Processo trabalho (Grã-Bretanha)">Processo trabalho (Grã-Bretanha)</option>
+
+                <option value="Processo trabalho (Itália)">Processo trabalho (Itália)</option>
+
+                <option value="Processo trabalho (México)">Processo trabalho (México)</option>
+
+                <option value="Processo trabalho (Portugal)">Processo trabalho (Portugal)</option>
+
+                <option value="Processo trabalho (Resumo)">Processo trabalho (Resumo)</option>
+
+                <option value="Processo urgente">Processo urgente</option>
+
+                <option value="Processos Criminais">Processos Criminais</option>
+
+                <option value="Processos criminais (Prática de campo)">Processos criminais (Prática de campo)</option>
+
+                <option value="Processos incidentes">Processos incidentes</option>
+
+                <option value="Processos latentes">Processos latentes</option>
+
+                <option value="Processos parlamentares">Processos parlamentares</option>
+
+                <option value="Processos sociais">Processos sociais</option>
+
+                <option value="Processos sociais - Dinâmica social">Processos sociais - Dinâmica social</option>
+
+                <option value="Processual (técnica)">Processual (técnica)</option>
+
+                <option value="Prática Processual Civil">Prática Processual Civil</option>
+
+                <option value="Psicologia jurídica">Psicologia jurídica</option>
+
+                <option value="Recursos processuais">Recursos processuais</option>
+
+                <option value="Regime Jurídico">Regime Jurídico</option>
+
+                <option value="Remédios jurídicos">Remédios jurídicos</option>
+
+                <option value="Responsabilidade Jurídica">Responsabilidade Jurídica</option>
+
+                <option value="Sistema Processual">Sistema Processual</option>
+
+                <option value="Sistema jurídico">Sistema jurídico</option>
+
+                <option value="Sistema jurídico brasileiro">Sistema jurídico brasileiro</option>
+
+                <option value="Sociologia Jurídica">Sociologia Jurídica</option>
+
+                <option value="Sociologismo Jurídico">Sociologismo Jurídico</option>
+
+                <option value="Suspensão condicional - Processo">Suspensão condicional - Processo</option>
+
+                <option value="Teoria geral do processo (Brasil)">Teoria geral do processo (Brasil)</option>
+
+                <option value="Tribunal(Processo)">Tribunal(Processo)</option>
+
+                <option value="Tutela(processo civil)">Tutela(processo civil)</option>
+
+                <option value="Ética jurídica">Ética jurídica</option>
+
+              </select>
+            
+            <div class="bodytitle">
+              <div></div>
+              <h3>Informações de formatação</h3>
+            </div>
+              
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="id_fonte">Fonte</label>
+              <select name="fonte" id="id_fonte" class="form-control" title="">
+                <option value="Arial">Arial</option>
+
+                <option value="Times" selected>Times New Roman</option>
+              </select>
+            </div>
+            
+            <div id="buttonsline"></div>
+            {% buttons %}
+              <button name="submit" class="btn btn-primary">Gerar ficha catalográfica</button>
+            {% endbuttons %}
+          </form>
+        </div>
+        <div class="col-md-2">
         </div>
       </div>
-    </header>
 
-    <div class="row">
-      <div class="col-md-2">
-      </div>
-      <div role="main" class="col-md-8" id="formdiv"> <!-- Exibe o formulário -->
-        <form action="{% url 'fichas:index' %}" method="post" target="_blank" class="form">
-          {% csrf_token %}
-          
-          <h2>Dados pessoais</h2>
-          <h3>São os seus dados de identificação.</h3>
-          
-          <div class="form-group">
-            <label class="control-label" for="id_nome">Nome*:</label>
-            <input type="text" name="nome" placeholder="Nome completo (menos último nome)" id="id_nome" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_sobrenome">Último nome*:</label>
-            <input type="text" name="sobrenome" placeholder="Último nome" id="id_sobrenome" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_instituicao">Instituição de ensino*:</label>
-            <input type="text" name="instituicao" value="Faculdade Serra do Carmo" placeholder="Instituição de ensino" id="id_instituicao" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_curso">Curso*:</label>
-            <input type="text" name="curso" value="Direito" placeholder="Curso" id="id_curso" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_titulo_obtido">Título obtido*:</label>
-            <select name="titulo_obtido" class="form-control" id="id_titulo_obtido" title="">
-              <option value="Bacharel">Bacharel</option>
-
-              <option value="Mestre">Mestre</option>
-
-              <option value="Doutor">Doutor</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_cidade">Cidade*:</label>
-            <input type="text" name="cidade" value="Palmas" placeholder="Cidade" id="id_cidade" title="" class="form-control" required maxlength="100" />
-          </div>
-          
-          <h2>Dados do trabalho</h2>
-          <h3>São os dados referentes ao trabalho realizado.</h3>
-          
-          <div class="form-group">
-            <label class="control-label" for="id_titulo">Título*:</label>
-            <input type="text" name="titulo" placeholder="Título do trabalho" id="id_titulo" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_sub_titulo">Sub-título:</label>
-            <input type="text" name="sub_titulo" placeholder="Sub-título (opcional)" id="id_sub_titulo" title="" class="form-control" maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_ano">Ano*:</label>
-            <input type="number" name="ano" value="2017" placeholder="Ano de apresentação do trabalho" id="id_ano" title="" class="form-control" required min="0" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_orientador">Orientador*:</label>
-            <input type="text" name="orientador" placeholder="Nome completo do(a) orientador(a)" id="id_orientador" title="" class="form-control" required maxlength="200" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_tipo_trabalho">Tipo do trabalho*:</label>
-            <select name="tipo_trabalho" class="form-control" id="id_tipo_trabalho" title="">
-              <option value="Monografia" selected>Monografia</option>
-
-              <option value="Dissertação">Dissertação</option>
-
-              <option value="Tese">Tese</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_folhas">Número de folhas*:</label>
-            <input type="number" name="folhas" value="1" placeholder="Número de folhas" id="id_folhas" title="" class="form-control" required min="0" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_figuras">O trabalho possui figuras?</label>
-            <select name="figuras" class="form-control" id="id_figuras" title="">
-              <option value="Sim" selected>Sim</option>
-
-              <option value="Nao">Não</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_referencias">Nº da folha em que começam as referências bibliográficas*:</label>
-            <input type="number" name="referencias" value="1" placeholder="Nº da folha em que começam as referências bibliográficas" id="id_referencias" title="" class="form-control" required min="0" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_anexos">Nº da folha em que começam os anexos:</label>
-            <input type="number" name="anexos" value="1" placeholder="Nº da folha em que começam os anexos" id="id_anexos" title="" class="form-control" min="0" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_encardenacao">Tipo de encardenação*:</label>
-            <select name="encardenacao" class="form-control" id="id_encardenacao" title="">
-              <option value="Brochura" selected>Brochura</option>
-
-              <option value="Espiral">Espiral</option>
-
-            </select>
-          </div>
-          
-          <h2>Assuntos do trabalho</h2>
-          <h3>Os assuntos da área de direito relacionados ao seu trabalho. 
-              Selecione ao menos um assunto.</h3>
-          
-          <div class="form-group">
-            <label class="control-label" for="id_assunto1">Assunto 1*:</label>
-            <select name="assunto1" class="form-control" id="id_assunto1" title="">
-              <option value="Direito" selected>Direito</option>
-
-              <option value="Direito Público">Direito Público</option>
-
-              <option value="Direito Internacional Público">Direito Internacional Público</option>
-
-              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
-
-              <option value="Direito Constitucional">Direito Constitucional</option>
-
-              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
-
-              <option value="Direito Eleitoral">Direito Eleitoral</option>
-
-              <option value="Direito Administrativo">Direito Administrativo</option>
-
-              <option value="Direito Ambiental">Direito Ambiental</option>
-
-              <option value="Direito Econômico">Direito Econômico</option>
-
-              <option value="Direito Financeiro">Direito Financeiro</option>
-
-              <option value="Direito Tributário">Direito Tributário</option>
-
-              <option value="Direito Processual">Direito Processual</option>
-
-              <option value="Direito Processual Penal">Direito Processual Penal</option>
-
-              <option value="Direito Processual Civil">Direito Processual Civil</option>
-
-              <option value="Direito Penal">Direito Penal</option>
-
-              <option value="Direito Penitenciário">Direito Penitenciário</option>
-
-              <option value="Direito Previdenciário">Direito Previdenciário</option>
-
-              <option value="Direito Militar">Direito Militar</option>
-
-              <option value="Direito Penal Militar">Direito Penal Militar</option>
-
-              <option value="Direito Aéreo">Direito Aéreo</option>
-
-              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
-
-              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
-
-              <option value="Direito Espacial">Direito Espacial</option>
-
-              <option value="Direito Privado">Direito Privado</option>
-
-              <option value="Direito Civil">Direito Civil</option>
-
-              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
-
-              <option value="Direito de Família">Direito de Família</option>
-
-              <option value="Direito das Sucessões">Direito das Sucessões</option>
-
-              <option value="Direito do Menor">Direito do Menor</option>
-
-              <option value="Direito Comercial">Direito Comercial</option>
-
-              <option value="Direito Bancário">Direito Bancário</option>
-
-              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
-
-              <option value="Direito autoral">Direito autoral</option>
-
-              <option value="Direito Marítimo">Direito Marítimo</option>
-
-              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
-
-              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
-
-              <option value="Direito do Consumidor">Direito do Consumidor</option>
-
-              <option value="Direito do Trabalho">Direito do Trabalho</option>
-
-              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_assunto2">Assunto 2:</label>
-            <select name="assunto2" class="form-control" id="id_assunto2" title="">
-              <option value="" selected>---------</option>
-
-              <option value="Direito">Direito</option>
-
-              <option value="Direito Público">Direito Público</option>
-
-              <option value="Direito Internacional Público">Direito Internacional Público</option>
-
-              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
-
-              <option value="Direito Constitucional">Direito Constitucional</option>
-
-              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
-
-              <option value="Direito Eleitoral">Direito Eleitoral</option>
-
-              <option value="Direito Administrativo">Direito Administrativo</option>
-
-              <option value="Direito Ambiental">Direito Ambiental</option>
-
-              <option value="Direito Econômico">Direito Econômico</option>
-
-              <option value="Direito Financeiro">Direito Financeiro</option>
-
-              <option value="Direito Tributário">Direito Tributário</option>
-
-              <option value="Direito Processual">Direito Processual</option>
-
-              <option value="Direito Processual Penal">Direito Processual Penal</option>
-
-              <option value="Direito Processual Civil">Direito Processual Civil</option>
-
-              <option value="Direito Penal">Direito Penal</option>
-
-              <option value="Direito Penitenciário">Direito Penitenciário</option>
-
-              <option value="Direito Previdenciário">Direito Previdenciário</option>
-
-              <option value="Direito Militar">Direito Militar</option>
-
-              <option value="Direito Penal Militar">Direito Penal Militar</option>
-
-              <option value="Direito Aéreo">Direito Aéreo</option>
-
-              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
-
-              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
-
-              <option value="Direito Espacial">Direito Espacial</option>
-
-              <option value="Direito Privado">Direito Privado</option>
-
-              <option value="Direito Civil">Direito Civil</option>
-
-              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
-
-              <option value="Direito de Família">Direito de Família</option>
-
-              <option value="Direito das Sucessões">Direito das Sucessões</option>
-
-              <option value="Direito do Menor">Direito do Menor</option>
-
-              <option value="Direito Comercial">Direito Comercial</option>
-
-              <option value="Direito Bancário">Direito Bancário</option>
-
-              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
-
-              <option value="Direito autoral">Direito autoral</option>
-
-              <option value="Direito Marítimo">Direito Marítimo</option>
-
-              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
-
-              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
-
-              <option value="Direito do Consumidor">Direito do Consumidor</option>
-
-              <option value="Direito do Trabalho">Direito do Trabalho</option>
-
-              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_assunto3">Assunto 3:</label>
-            <select name="assunto3" class="form-control" id="id_assunto3" title="">
-              <option value="" selected>---------</option>
-
-              <option value="Direito">Direito</option>
-
-              <option value="Direito Público">Direito Público</option>
-
-              <option value="Direito Internacional Público">Direito Internacional Público</option>
-
-              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
-
-              <option value="Direito Constitucional">Direito Constitucional</option>
-
-              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
-
-              <option value="Direito Eleitoral">Direito Eleitoral</option>
-
-              <option value="Direito Administrativo">Direito Administrativo</option>
-
-              <option value="Direito Ambiental">Direito Ambiental</option>
-
-              <option value="Direito Econômico">Direito Econômico</option>
-
-              <option value="Direito Financeiro">Direito Financeiro</option>
-
-              <option value="Direito Tributário">Direito Tributário</option>
-
-              <option value="Direito Processual">Direito Processual</option>
-
-              <option value="Direito Processual Penal">Direito Processual Penal</option>
-
-              <option value="Direito Processual Civil">Direito Processual Civil</option>
-
-              <option value="Direito Penal">Direito Penal</option>
-
-              <option value="Direito Penitenciário">Direito Penitenciário</option>
-
-              <option value="Direito Previdenciário">Direito Previdenciário</option>
-
-              <option value="Direito Militar">Direito Militar</option>
-
-              <option value="Direito Penal Militar">Direito Penal Militar</option>
-
-              <option value="Direito Aéreo">Direito Aéreo</option>
-
-              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
-
-              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
-
-              <option value="Direito Espacial">Direito Espacial</option>
-
-              <option value="Direito Privado">Direito Privado</option>
-
-              <option value="Direito Civil">Direito Civil</option>
-
-              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
-
-              <option value="Direito de Família">Direito de Família</option>
-
-              <option value="Direito das Sucessões">Direito das Sucessões</option>
-
-              <option value="Direito do Menor">Direito do Menor</option>
-
-              <option value="Direito Comercial">Direito Comercial</option>
-
-              <option value="Direito Bancário">Direito Bancário</option>
-
-              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
-
-              <option value="Direito autoral">Direito autoral</option>
-
-              <option value="Direito Marítimo">Direito Marítimo</option>
-
-              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
-
-              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
-
-              <option value="Direito do Consumidor">Direito do Consumidor</option>
-
-              <option value="Direito do Trabalho">Direito do Trabalho</option>
-
-              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_assunto4">Assunto 4:</label>
-            <select name="assunto4" class="form-control" id="id_assunto4" title="">
-              <option value="" selected>---------</option>
-
-              <option value="Direito">Direito</option>
-
-              <option value="Direito Público">Direito Público</option>
-
-              <option value="Direito Internacional Público">Direito Internacional Público</option>
-
-              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
-
-              <option value="Direito Constitucional">Direito Constitucional</option>
-
-              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
-
-              <option value="Direito Eleitoral">Direito Eleitoral</option>
-
-              <option value="Direito Administrativo">Direito Administrativo</option>
-
-              <option value="Direito Ambiental">Direito Ambiental</option>
-
-              <option value="Direito Econômico">Direito Econômico</option>
-
-              <option value="Direito Financeiro">Direito Financeiro</option>
-
-              <option value="Direito Tributário">Direito Tributário</option>
-
-              <option value="Direito Processual">Direito Processual</option>
-
-              <option value="Direito Processual Penal">Direito Processual Penal</option>
-
-              <option value="Direito Processual Civil">Direito Processual Civil</option>
-
-              <option value="Direito Penal">Direito Penal</option>
-
-              <option value="Direito Penitenciário">Direito Penitenciário</option>
-
-              <option value="Direito Previdenciário">Direito Previdenciário</option>
-
-              <option value="Direito Militar">Direito Militar</option>
-
-              <option value="Direito Penal Militar">Direito Penal Militar</option>
-
-              <option value="Direito Aéreo">Direito Aéreo</option>
-
-              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
-
-              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
-
-              <option value="Direito Espacial">Direito Espacial</option>
-
-              <option value="Direito Privado">Direito Privado</option>
-
-              <option value="Direito Civil">Direito Civil</option>
-
-              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
-
-              <option value="Direito de Família">Direito de Família</option>
-
-              <option value="Direito das Sucessões">Direito das Sucessões</option>
-
-              <option value="Direito do Menor">Direito do Menor</option>
-
-              <option value="Direito Comercial">Direito Comercial</option>
-
-              <option value="Direito Bancário">Direito Bancário</option>
-
-              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
-
-              <option value="Direito autoral">Direito autoral</option>
-
-              <option value="Direito Marítimo">Direito Marítimo</option>
-
-              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
-
-              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
-
-              <option value="Direito do Consumidor">Direito do Consumidor</option>
-
-              <option value="Direito do Trabalho">Direito do Trabalho</option>
-
-              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
-
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="id_assunto5">Assunto 5:</label>
-            <select name="assunto5" class="form-control" id="id_assunto5" title="">
-              <option value="" selected>---------</option>
-
-              <option value="Direito">Direito</option>
-
-              <option value="Direito Público">Direito Público</option>
-
-              <option value="Direito Internacional Público">Direito Internacional Público</option>
-
-              <option value="Direito Penal Internacional">Direito Penal Internacional</option>
-
-              <option value="Direito Constitucional">Direito Constitucional</option>
-
-              <option value="Direitos Fundamentais">Direitos Fundamentais</option>
-
-              <option value="Direito Eleitoral">Direito Eleitoral</option>
-
-              <option value="Direito Administrativo">Direito Administrativo</option>
-
-              <option value="Direito Ambiental">Direito Ambiental</option>
-
-              <option value="Direito Econômico">Direito Econômico</option>
-
-              <option value="Direito Financeiro">Direito Financeiro</option>
-
-              <option value="Direito Tributário">Direito Tributário</option>
-
-              <option value="Direito Processual">Direito Processual</option>
-
-              <option value="Direito Processual Penal">Direito Processual Penal</option>
-
-              <option value="Direito Processual Civil">Direito Processual Civil</option>
-
-              <option value="Direito Penal">Direito Penal</option>
-
-              <option value="Direito Penitenciário">Direito Penitenciário</option>
-
-              <option value="Direito Previdenciário">Direito Previdenciário</option>
-
-              <option value="Direito Militar">Direito Militar</option>
-
-              <option value="Direito Penal Militar">Direito Penal Militar</option>
-
-              <option value="Direito Aéreo">Direito Aéreo</option>
-
-              <option value="Direito Aéreo Militar">Direito Aéreo Militar</option>
-
-              <option value="Direito aplicado à Telecomunicação">Direito aplicado à Telecomunicação</option>
-
-              <option value="Direito Espacial">Direito Espacial</option>
-
-              <option value="Direito Privado">Direito Privado</option>
-
-              <option value="Direito Civil">Direito Civil</option>
-
-              <option value="Direitos Reais, Coisas e Bens">Direitos Reais, Coisas e Bens</option>
-
-              <option value="Direito de Família">Direito de Família</option>
-
-              <option value="Direito das Sucessões">Direito das Sucessões</option>
-
-              <option value="Direito do Menor">Direito do Menor</option>
-
-              <option value="Direito Comercial">Direito Comercial</option>
-
-              <option value="Direito Bancário">Direito Bancário</option>
-
-              <option value="Direitos Intelectuais">Direitos Intelectuais</option>
-
-              <option value="Direito autoral">Direito autoral</option>
-
-              <option value="Direito Marítimo">Direito Marítimo</option>
-
-              <option value="Direito Aeronáutico">Direito Aeronáutico</option>
-
-              <option value="Direito Internacional Privado">Direito Internacional Privado</option>
-
-              <option value="Direito do Consumidor">Direito do Consumidor</option>
-
-              <option value="Direito do Trabalho">Direito do Trabalho</option>
-
-              <option value="Direito Processual do Trabalho">Direito Processual do Trabalho</option>
-
-            </select>
-          </div>
-          
-          <h2>Opções de formatação</h2>
-          <h3>Opções relacionadas à formatação da ficha.</h3>
-          
-          <div class="form-group">
-            <label class="control-label" for="id_fonte">Fonte:</label>
-            <select name="fonte" class="form-control" id="id_fonte" title="">
-              <option value="Arial">Arial</option>
-
-              <option value="Times" selected>Times New Roman</option>
-
-            </select>
-          </div>
-          
-          <!-- {% bootstrap_form form %} -->
-          
-          {% buttons %}
-            <button name="submit" class="btn btn-primary">Gerar ficha</button>
-          {% endbuttons %}
-        </form>
-      </div> <!-- Fecha div do formulário -->
-      <div class="col-md-2">
-      </div>
-    </div>
-
-    <footer class="row"> <!-- Exibe uma mensagem no rodapé -->
-      <p class="text-muted">Desenvolvido pelo setor de TI da Faculdade Serra
-      do Carmo</p>
-    </footer>
+      <footer class="row">
+        <p class="text-muted">Desenvolvido pelo setor de TI da Faculdade Serra
+        do Carmo</p>
+      </footer>
 
     </div>
-    <!-- Fecha div geral (container) -->
   </body>
 </html>

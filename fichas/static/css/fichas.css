@@ -1,38 +1,46 @@
 /* CSS da página única da aplicação */
 
-.navbar-default {
-    background-color: #125775;
-    border-color: #E7E7E7;
-}
-
-.navbar-default .navbar-brand {
-    color: #cccccc;
-}
-
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-    color: #ffffff;
-}
-
-h2 {
-    padding-top: 30px;
+h3 {
     color: #787878;
 }
 
-h3 {
-    padding-bottom: 20px;
+h4 {
     color: #aaaaaa;
 }
 
 header {
     color: black;
     font-family: "Verdana", Arial, sans-serif;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-div.jumbotron {
-    padding-top: 120px;
-    padding-bottom: 100px;
-    border-color: #125775
+div.bodytitle {
+    padding-bottom: 20px;
+}
+
+div.bodytitle div {
+    margin-top: 50px;
+    min-height: 1px;
+    background-color: #d4d4d4;
+}
+
+#buttonsline {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    min-height: 1px;
+    background-color: #d4d4d4;
+}
+
+#topline {
+    min-height: 5px;
+    background-color: #0008ff;
+}
+
+#botline {
+    min-height: 1px;
+    background-color: #d4d4d4;
+    margin-bottom: 10px;
 }
 
 input, select {
@@ -40,7 +48,8 @@ input, select {
 }
 
 footer {
-    padding-top: 30px;
+    margin-top: 20px;
+    padding-top: 35px;
     padding-bottom: 30px;
     background-color: #d4d4d4;
     text-align: center;
